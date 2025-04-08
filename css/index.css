@@ -1,0 +1,461 @@
+:root {
+    --link-transition: all 250ms ease;
+    --nav-options-transition: opacity 250ms ease-in-out;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+
+    list-style: none;
+    appearance: none;
+    text-decoration: none;
+
+    box-sizing: border-box;
+    color: 	#F0F8FF; /* AliceBlue */
+}
+
+body {
+    font-family: sanf-serif;
+    line-height: 1.5;
+    font-size: 1.1rem;
+    background-color: #415b8b;
+}
+
+a {
+    transition: var(--link-transition);
+}
+
+h1 {
+    font-size: 2.75rem;
+}
+
+.nav {
+    display: flex;
+    justify-content: center;
+}
+
+.nav__container {
+    padding: 1.2rem 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 95%;
+}
+
+.nav__logo {
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.nav__options {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    align-items: center;
+}
+
+.nav__options a {
+    font-size: 1.2rem;
+}
+
+.nav__options a:hover {
+    color: gold;
+}
+
+.nav__options_credentials {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+}
+
+.nav__options_credentials_image {
+    position: relative;
+    /* use flex display and fit-content height to remove 
+       the unnecessary bottom padding of this container.
+       For some reason, static display with an image inside
+       this container produces unnecessary bottom padding.
+    */
+    display: flex;
+    height: fit-content;
+}
+
+.nav__options_credentials_image img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 2px solid navy;
+}
+
+.nav__options_credentials_options, .nav__options_credentials_options_mobile {
+    transition: var(--nav-options-transition);
+    opacity: 0;
+    position: absolute;
+    border-radius: 5%;
+    left: -24px;
+    top: 48px;
+    /*
+        width: max-content includes padding as part of the width
+        width: fit-content only includes the element's width
+    */
+    display: flex;
+    flex-direction: column;
+    width: max-content;
+    padding: 0.25rem 0;
+    
+}
+
+/*
+    Make sure that, the two containers are 'integrated'. 'Integrated'
+    in this context means that the two containers must not have a gap
+    in-between. In this content, nav__options_credentials_image is on
+    top and nav__options_credentials_options on bottom. They must not 
+    have a vertical gap in-between containers. Otherwise, 
+    nav__options_credentials_options won't stay visible once the mouse
+    pointer hit the gap in-betweeen containers.
+*/
+.nav__options_credentials_image:hover > .nav__options_credentials_options {
+    transition: var(--nav-options-transition);
+    opacity: 1;
+}
+
+.nav__options_credentials_options_list > li {
+    opacity: 0;
+    animation: navMobileDropdown 300ms ease forwards;
+    box-shadow: black 3px 5px 2px;
+    background-color: navy;
+}
+
+.nav__options_credentials_options_list > li > a {
+    display: flex;
+    width: 100%;
+    padding: 0 0.75rem;
+    font-size: 1.25rem;
+}
+
+.nav__options_credentials_options_list > li:hover {
+    background-color: rebeccapurple;
+}
+
+.nav__options_mobile {
+    display: none;
+    position: relative;
+    flex-direction: column;
+}
+
+.nav__options_mobile > .choices {
+    display: flex;
+}
+
+.nav__options_mobile > .choices > .menu {
+    display: flex;
+    height: fit-content;
+}
+
+.nav__options_mobile > .choices > .close {
+    display: none;
+    height: fit-content;
+}
+
+/* General */
+
+.featured_blog__container, .blog_list__container, .category_list__container, .search_bar__container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+    width: 95%;
+}
+
+.content_container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+    align-items: center;
+}
+
+
+/* Search Bar */
+
+.search_bar__form > div {
+    display: flex;
+    height: fit-content;
+    width: fit-content;
+    
+    column-gap: 0.5rem;
+    padding: 0.25rem;
+    background-color: azure;
+    border-radius: 5px;
+}
+
+.search_bar__form > div > input {
+    color: black;
+    font-size: 1rem;
+    background-color: rgba(0,0,0,0);
+}
+
+.search_bar__form > div > input::placeholder {
+    font-style: italic;
+}
+
+.search_bar__form > div > button {
+    color: black;
+    font-size: 1rem;
+    padding: 0.5rem;
+    border-radius: 5px;
+}
+
+.search_bar__form > div > svg {
+    height: 2rem;
+}
+
+
+/* Featured Blog */
+
+.featured_blog {
+    display: flex;
+    column-gap: 0.75rem;
+}
+
+/* Blog */
+
+.blog__image {
+    display: flex;
+    height: fit-content;
+}
+
+.blog__image img {
+    width: 500px;
+    border-radius: 5%;
+}
+
+.blog__info {
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+}
+
+.blog__info_meta {
+    display: flex;
+    column-gap: 0.5rem;
+}
+
+.blog__info_meta > img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 2px solid navy;
+}
+
+.blog__categories {
+    display: flex;
+    column-gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.blog__categories_item {
+    background-color: darkslateblue;
+    padding: 0.25rem;
+    border-radius: 5%;
+}
+
+/* Blog list */
+
+.blog_list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 2rem;
+    row-gap: 2rem;
+}
+
+.blog_list__image img {
+    width: 100%;
+    border-radius: 5%;
+}
+
+/* Category List */
+
+.category_list__hr {
+    color: gainsboro;
+    background-color: gainsboro;
+    height: 1px;
+    margin-top: 2rem;
+}
+
+.category_list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 0.75rem;
+    row-gap: 0.75rem;
+    padding: 2rem 0;
+}
+
+.category_list__link {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 5%;
+    background-color:cornflowerblue;
+    transition: var(--link-transition);
+}
+
+.category_list__link:hover {
+    transition: var(--link-transition);
+    background-color:hsl(236, 79%, 60%);
+}
+
+
+/* Footer */
+
+.footer {
+    background-color: darkslateblue;
+    box-shadow: inset 0 0.25rem hsla(236, 79%, 50%, 0.2);
+    padding: 2rem 0;
+}
+
+.footer__icons {
+    display: flex;
+    column-gap: 1rem;
+    justify-content: center;
+}
+
+.footer__icons > a:hover > svg {
+    transition: var(--link-transition);
+    fill:red;
+}
+
+.footer__icons > a > svg {
+    transition: var(--link-transition);
+    width: 32px;
+    height: fit-content;
+}
+
+.footer__links {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    justify-items: center;
+}
+
+.footer__links_container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    margin: 2rem 0;
+}
+
+.footer__links_list {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+}
+
+.footer__links_list a {
+    transition: none;
+    width: fit-content;
+}
+
+.footer__links_list a:hover{
+    transition: none;
+    transform: scale(1.05);
+}
+
+.footer__copyright {
+    display: flex;
+    justify-content: center;
+}
+
+
+/* Animations */
+
+@keyframes navMobileDropdown {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+
+/* Media Queries */
+
+/* Medium Devices */
+@media screen and (max-width: 1024px) {
+    .blog__image img {
+        width: 250px;
+    }
+
+    .blog_list {
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 1.75rem;
+        row-gap: 1.75rem;
+    }
+
+    .nav__options {
+        display: none;
+    }
+
+    .nav__options_mobile {
+        display: flex;
+        align-items: center;
+    }
+
+    .nav__options_credentials_options_mobile {
+        opacity: 1;
+        display: none;
+        width: 125px;
+        left: -74px;
+        top: 32px;
+    }
+
+    .nav__options_credentials_options_mobile > .nav__options_credentials_options_list > li {
+        padding: 0.75rem 0;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+}
+
+/* Small Devices */
+@media screen and (max-width: 600px) {
+    .featured_blog {
+        flex-direction: column;
+    }
+
+    .featured_blog .blog__image img {
+        width: 100%;
+    }
+
+    .blog_list {
+        grid-template-columns: 1fr;
+        column-gap: 1.75rem;
+        row-gap: 1.75rem;
+    }
+
+    .footer__links {
+     grid-template-columns: repeat(2, 1fr);
+     justify-items: flex-start;
+     row-gap: 1.5rem;
+     column-gap: 5rem;
+     width: min-content; /* Tightly wraps entire content in this grid*/
+    }
+
+    .footer__links_container {
+        margin: 0;
+    }
+
+    .footer__links_wrapper {
+        display: flex;
+        flex-direction: column;
+        padding: 2rem 0;
+        align-items: center;
+    }
+
+    .footer__copyright {
+        font-size: 1rem;
+    }
+}
