@@ -168,7 +168,7 @@ select {
     opacity: 0;
     position: absolute;
     border-radius: 5%;
-    left: -24px;
+    left: -40px;
     top: 48px;
     /*
         width: max-content includes padding as part of the width
