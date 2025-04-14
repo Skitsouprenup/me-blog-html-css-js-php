@@ -233,6 +233,16 @@ select {
     height: fit-content;
 }
 
+.logo_for_credential_pages {
+    display: flex;
+    justify-content: center;
+    padding: 2rem 0;
+}
+
+.logo_for_credential_pages > a {
+    font-size: 2.5rem;
+}
+
 /* General */
 
 .featured_blog__container, .blog_list__container, .category_list__container, 
@@ -495,8 +505,14 @@ select {
 
 /* Forms */
 
-.form-body {
-    height: 100vh;
+.form_body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.signin_body, .signup_body {
+    height: 100%;
 }
 
 .form_section {
@@ -504,7 +520,7 @@ select {
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 100%;
+    height: max-content;
 }
 
 .form_container {
@@ -918,5 +934,24 @@ select {
 
     .data_view_large_screen {
         display: none;
+    }
+
+}
+
+/* Tall Devices. If content in body is not enough 
+ to fill up the entire screen, we use these queries
+ to acquire all space on the screen and then
+ center the content on the screen instead of leaving
+ free space on the bottom.
+ */
+@media screen and (min-height: 800px) {
+    .signup_body {
+        height: 100vh;
+    }
+}
+
+@media screen and (min-height: 600px) {
+    .signin_body {
+        height: 100vh;
     }
 }

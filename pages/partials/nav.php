@@ -1,4 +1,5 @@
-<?php 
+<?php
+    require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/scripts/utils/usersession.php";
     $dashboard_link = DOMAIN_NAME.'pages/views/dashboard/manage_posts.php';
     $home_link = DOMAIN_NAME.'index.php';
     $login_page = DOMAIN_NAME.'pages/forms/signin.php';
@@ -12,22 +13,27 @@
             <a href="#">Blogposts</a>
             <a href="#">About</a>
             <a href="#">Contact</a>
+            <?php if($user_session === NULL):?>
+                <a href=<?php echo $login_page ?>>Sign In</a>
+            <?php endif?>
 
-            <div class="nav__options_credentials">
+            <?php if($user_session !== NULL):?>
+                <div class="nav__options_credentials">
 
-                <div class="nav__options_credentials_image">
-                    <img src=<?php echo DOMAIN_NAME."images/avatar/52685143.jpg" ?> />
+                    <div class="nav__options_credentials_image">
+                        <img src=<?php echo $user_session['avatar'] ?> />
 
-                    <div class="nav__options_credentials_options">
+                        <div class="nav__options_credentials_options">
 
-                        <ul class="nav__options_credentials_options_list">
-                            <li><a href=<?php echo $dashboard_link ?>>Dashboard</a></li>
-                            <li><a href=<?php echo $login_page ?>>Sign Out</a></li>
-                        </ul>
+                            <ul class="nav__options_credentials_options_list">
+                                <li><a href=<?php echo $dashboard_link ?>>Dashboard</a></li>
+                                <li><a href=<?php echo $login_page ?>>Sign Out</a></li>
+                            </ul>
 
+                        </div>
                     </div>
                 </div>
-            </div>
+            <?php endif?>
         </div>
 
         <div class="nav__options_mobile">
@@ -46,13 +52,25 @@
 
                 <div class="nav__options_credentials_options_mobile">
 
-                    <ul class="nav__options_credentials_options_list">
-                        <li><a href="#">Blogposts</a></li>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href=<?php echo $dashboard_link ?>>Dashboard</a></li>
-                        <li><a href=<?php echo $login_page ?>>Sign Out</a></li>
-                    </ul>
+                    <?php if($user_session !== NULL):?>
+                        <ul class="nav__options_credentials_options_list">
+                            <li><a href="#">Blogposts</a></li>
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Contact</a></li>
+                            <li><a href=<?php echo $dashboard_link ?>>Dashboard</a></li>
+                            <li><a href=<?php echo $login_page ?>>Sign Out</a></li>
+                        </ul>
+                    <?php endif?>
+
+                    <?php if($user_session === NULL):?>
+                        <ul class="nav__options_credentials_options_list">
+                            <li><a href="#">Blogposts</a></li>
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Contact</a></li>
+                            <li><a href=<?php echo $login_page ?>>Sign In</a></li>
+                        </ul>
+                    <?php endif?>
+
                 </div>
             </div>
         </div>
