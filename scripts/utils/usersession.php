@@ -2,7 +2,7 @@
 
     $user_session = NULL;
     if(isset($_SESSION['user_session'])) {
-        $status = $_SESSION['user_session'];
+        $status = $_SESSION['user_session']['status'];
 
         if($status === 'login') {
             $user_session = $_SESSION['user_session'];

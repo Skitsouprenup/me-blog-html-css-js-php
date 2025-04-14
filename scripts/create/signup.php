@@ -67,8 +67,6 @@
                 $_SESSION['signup_error'] = "Username or e-mail already exists!";
             }
             else {
-                
-                $hashed = password_hash($credentials['password'][0], PASSWORD_DEFAULT);
 
                 //current time in seconds.
                 $time = time();
@@ -78,7 +76,8 @@
                 $avatar_tmp_name = $avatar['tmp_name'];
 
                 $avatar_dest = ROOT_PATH.'images/avatar/'.$avatar_name;
-                global $avatar_dest_client = DOMAIN_NAME.'images/avatar/'.$avatar_name;
+                global $avatar_dest_client;
+                $avatar_dest_client = DOMAIN_NAME.'images/avatar/'.$avatar_name;
 
                 //Check if file is an image
                 $allowed_ext = ['png', 'jpg', 'jpeg'];
@@ -102,6 +101,9 @@
         }
         //Save user data to database if there's no prior error.
         else {
+
+            $hashed = password_hash($credentials['password'][0], PASSWORD_DEFAULT);
+
             $insert_statement = $connection->prepare(
                 "INSERT INTO users(firstname, lastname, username, email, password, avatar)".
                 " VALUES (?, ?, ?, ?, ?, ?)"
@@ -116,7 +118,7 @@
                 "ssssss", 
                 $credentials['firstname'][0], $credentials['lastname'][0],
                 $credentials['username'][0], $credentials['email'][0],
-                $credentials['password'][0], $avatar_dest_client
+                $hashed, $avatar_dest_client
             );
             $insert_statement->execute();
             $insert_statement->close();
@@ -132,6 +134,8 @@
                 $result = $connection->query($fetch_user);
 
                 if ($result->num_rows > 0) {
+                    $row = $result->fetch_assoc();
+
                     //Create Session for user
                     $_SESSION['user_session'] = [
                         'id' => $row['id'],
