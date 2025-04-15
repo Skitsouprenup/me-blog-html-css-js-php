@@ -3,6 +3,7 @@
     $dashboard_link = DOMAIN_NAME.'pages/views/dashboard/manage_posts.php';
     $home_link = DOMAIN_NAME.'index.php';
     $login_page = DOMAIN_NAME.'pages/forms/signin.php';
+    $logout_script = DOMAIN_NAME.'scripts/delete/logout.php';
 ?>
 
 <nav class="nav">
@@ -27,7 +28,7 @@
 
                             <ul class="nav__options_credentials_options_list">
                                 <li><a href=<?php echo $dashboard_link ?>>Dashboard</a></li>
-                                <li><a href=<?php echo $login_page ?>>Sign Out</a></li>
+                                <li><a href=<?php echo $logout_script ?>>Sign Out</a></li>
                             </ul>
 
                         </div>
@@ -58,7 +59,7 @@
                             <li><a href="#">About</a></li>
                             <li><a href="#">Contact</a></li>
                             <li><a href=<?php echo $dashboard_link ?>>Dashboard</a></li>
-                            <li><a href=<?php echo $login_page ?>>Sign Out</a></li>
+                            <li><a href=<?php echo $logout_script ?>>Sign Out</a></li>
                         </ul>
                     <?php endif?>
 

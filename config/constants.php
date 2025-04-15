@@ -7,4 +7,14 @@
     define('DOMAIN_NAME', 'http://localhost/projects/blog-app/');
     define('ROOT_PATH', $_SERVER["DOCUMENT_ROOT"].'/projects/blog-app/');
 
+    enum PageAccess:string {
+        case Public = 'public';
+        case LoginRequired = 'login_required';
+    }
+
+    enum UserRoles:string {
+        case Admin = 'admin';
+        case Author = 'author';
+    }
+
 ?>

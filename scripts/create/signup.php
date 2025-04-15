@@ -140,7 +140,6 @@
                     $_SESSION['user_session'] = [
                         'id' => $row['id'],
                         'avatar' => $row['avatar'],
-                        'status' => 'login',
                         'role' => $row['role']
                     ];
                     //Head to landing page
