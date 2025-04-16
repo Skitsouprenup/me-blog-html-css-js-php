@@ -1,14 +1,15 @@
 <?php
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/constants.php";
+    pageAccessControl(__FILE__);
 ?>
 
 <!DOCTYPE html>
 <html>
-    <?php include ROOT_PATH.'pages/partials/head.php' ?>
+    <?php include ROOT_PATH.'pages'.$ds.'partials'.$ds.'head.php' ?>
 
     <body>
     <!-- navigation menu -->
-        <?php include ROOT_PATH.'pages/partials/nav.php'; ?>
+        <?php include ROOT_PATH.'pages'.$ds.'partials'.$ds.'nav.php'; ?>
 
         <div class="content_container">
             <div class="category_title">
@@ -49,6 +50,6 @@
         </div>
 
     <!-- Footer  -->
-        <?php include ROOT_PATH.'pages/partials/footer.php'; ?>
+        <?php include ROOT_PATH.'pages'.$ds.'partials'.$ds.'footer.php'; ?>
     </body>
 </html>

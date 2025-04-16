@@ -1,5 +1,7 @@
 <?php
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/constants.php";
+    pageAccessControl(__FILE__);
+
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/scripts/utils/credentials.php";
     $home_link = DOMAIN_NAME.'index.php';
     $form_action = DOMAIN_NAME.'scripts/create/signup.php';
@@ -14,7 +16,7 @@
 
 <!DOCTYPE html>
 <html>
-    <?php include ROOT_PATH.'pages/partials/head_content_only.php' ?>
+    <?php include ROOT_PATH.'pages'.$ds.'partials'.$ds.'head_content_only.php' ?>
 
     <body class="form_body signup_body">
         <div class="logo_for_credential_pages">

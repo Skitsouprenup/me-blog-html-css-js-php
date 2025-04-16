@@ -5,16 +5,16 @@
 <!DOCTYPE html>
 <html>
     
-    <?php include './pages/partials/head.php'; ?>
+    <?php include ROOT_PATH.'pages'.$ds.'partials'.$ds.'head.php' ?>
 
     <body>
 
         <!-- navigation menu -->
-        <?php include './pages/partials/nav.php'; ?>
+        <?php include ROOT_PATH.'pages'.$ds.'partials'.$ds.'nav.php'; ?>
 
         <div class="content_container">
 
-            <?php include './pages/partials/search.php'; ?>
+            <?php include '.'.$ds.'pages'.$ds.'partials'.$ds.'search.php'; ?>
 
         <!-- Featured Blog -->
             <section class="featured_blog__container">
@@ -194,7 +194,7 @@
         </div>
 
     <!-- Footer  -->
-    <?php include './pages/partials/footer.php'; ?>
+    <?php include ROOT_PATH.'pages'.$ds.'partials'.$ds.'footer.php'; ?>
 
     </body>
 </html>

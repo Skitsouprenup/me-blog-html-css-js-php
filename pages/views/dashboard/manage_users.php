@@ -1,5 +1,6 @@
 <?php
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/constants.php";
+    pageAccessControl(__FILE__);
 
     $select_sidebar_item_query = '.dashboard_side_bar > a > #manage_users_sidebar_item';
 ?>
@@ -7,21 +8,21 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <?php include ROOT_PATH.'pages/partials/head_content_only.php' ?>
+        <?php include ROOT_PATH.'pages'.$ds.'partials'.$ds.'head_content_only.php' ?>
         <script src=<?php echo DOMAIN_NAME."js/dashboard.js"; ?> defer></script>
     </head>
 
     <body>
 
         <div class="dashboard_body_wrapper">
-            <?php include ROOT_PATH.'pages/partials/dashboard/sidebar_items_mobile.php'; ?>
+            <?php include ROOT_PATH.'pages'.$ds.'partials'.$ds.'dashboard'.$ds.'sidebar_items_mobile.php'; ?>
 
         <!-- navigation menu -->
-            <?php include ROOT_PATH.'pages/partials/nav.php'; ?>
+            <?php include ROOT_PATH.'pages'.$ds.'partials'.$ds.'nav.php'; ?>
 
             <div class="dashboard_container">
                 <div class="dashboard_wrapper">
-                    <?php include ROOT_PATH.'pages/partials/dashboard/sidebar.php'; ?>
+                    <?php include ROOT_PATH.'pages'.$ds.'partials'.$ds.'dashboard'.$ds.'sidebar.php'; ?>
 
                     <div class="dashboard_content">
                         <h2>Manage Users</h2>
@@ -76,7 +77,7 @@
             </div>
 
         <!-- Footer  -->
-            <?php include ROOT_PATH.'pages/partials/footer.php'; ?>
+            <?php include ROOT_PATH.'pages'.$ds.'partials'.$ds.'footer.php'; ?>
             <!-- 
                 This script is in the bottom because we want to load all
                 html elements first before executing this script 
