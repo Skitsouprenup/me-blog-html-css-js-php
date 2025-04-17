@@ -1,8 +1,27 @@
 <?php
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/constants.php";
+    require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/db_constants.php";
     pageAccessControl(__FILE__);
 
     $select_sidebar_item_query = '.dashboard_side_bar > a > #manage_users_sidebar_item';
+    $update_user_page = DOMAIN_NAME.'pages/blog_forms/update/update_user.php';
+
+    $fetch_users = "SELECT id,firstname,lastname,username,role from users";
+    $result = $connection->query($fetch_users);
+
+    $usernames = [];
+    while($usernames[] = $result->fetch_assoc());
+
+    if(count($usernames) > 0) {
+        /* 
+            Check if the last element is null because fetch_assoc() always
+            put null at the end of array.
+        */
+        $end = end($usernames);
+        if(!isset($end)) array_pop($usernames);
+    }
+
+    $connection->close();
 ?>
 
 <!DOCTYPE html>
@@ -28,49 +47,65 @@
                         <h2>Manage Users</h2>
                         <div class="data_view_small_screen">
                             <div class="data_container">
-                                <div class="data">
-                                    <h3>Name</h3>
-                                    <p>John Doe</p>
-                                </div>
-                                <div class="data">
-                                    <h3>Username</h3>
-                                    <p>Me Username</p>
-                                </div>
-                                <div class="actions">
-                                    <h3>Actions</h3>
-                                    <button class="edit">Edit</button>
-                                    <button class="delete">Delete</button>
-                                </div>
+                                <?php foreach($usernames as $list):?>
+                                    <div class="data">
+                                        <h3>Name</h3>
+                                        <p><?php echo $list['firstname'].' '.$list['lastname']?></p>
+                                    </div>
+                                    <div class="data">
+                                        <h3>Username</h3>
+                                        <p><?php echo $list['username']?></p>
+                                    </div>
+                                    <div class="data">
+                                        <h3>Role</h3>
+                                        <p><?php echo $list['role']?></p>
+                                    </div>
+                                    <div class="actions">
+                                        <h3>Actions</h3>
+                                        <div class="dashboard_actions_mobile">
+                                            <a 
+                                                href=<?php echo $update_user_page.'?username='.$list['username']?>
+                                                class="edit"
+                                            >
+                                                <div>Edit</div>
+                                            </a>
+                                            <a href="#" class="delete">
+                                                <div>Delete</div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                <?php endforeach?>
+                                
                             </div>
                         </div>
                         <table class="data_view_large_screen">
                             <tr>
                                 <th>Name</th>
                                 <th>Username</th>
+                                <th>Role</th>
                                 <th>Actions</th>
                             </tr>
-                            <tr>
-                                <td>John Doe</td>
-                                <td>Me Username</td>
-                                <td>
-                                    <div class="dashboard_actions">
-                                        <button class="edit">Edit</button>
-                                        <button class="delete">Delete</button>
-                                    </div>
-                                </td>
-                                
-                            </tr>
-                            <tr>
-                                <td>Jane Doe</td>
-                                <td>Me Username 2</td>
-                                <td>
-                                    <div class="dashboard_actions">
-                                        <button class="edit">Edit</button>
-                                        <button class="delete">Delete</button>
-                                    </div>
-                                </td>
-                            </tr>
-
+                            <?php foreach($usernames as $list):?>
+                                <tr>
+                                    <td><?php echo $list['firstname'].' '.$list['lastname']?></td>
+                                    <td><?php echo $list['username']?></td>
+                                    <td><?php echo $list['role']?></td>
+                                    <td>
+                                        <div class="dashboard_actions">
+                                            <a 
+                                                href=<?php echo $update_user_page.'?username='.$list['username']?> 
+                                                class="edit"
+                                            >
+                                                <div>Edit</div>
+                                            </a>
+                                            <a href="#" class="delete">
+                                                <div>Delete</div>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    
+                                </tr>
+                            <?php endforeach?>
                         </table>
                     </div>
                 </div>

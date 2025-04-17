@@ -26,6 +26,7 @@
             $ds.'pages'.$ds.'forms'.$ds.'signup.php',
             $ds.'pages'.$ds.'views'.$ds.'category_list.php',
             $ds.'pages'.$ds.'views'.$ds.'single_post.php',
+            $ds.'index.php', #Root
             $ds, #Root
         ],
         'login_required' => [
@@ -81,8 +82,8 @@
 
             if($page_access === PageAccess::AdminLoginRequired->value) {
                 $admin_login = False;
-                $sesion = $_SESSION['user_session'];
-                if(isset($session) && UserRoles::Admin === from($session['role'])) {
+                $session = $_SESSION['user_session'];
+                if(isset($session) && UserRoles::Admin === UserRoles::from($session['role'])) {
                     $admin_login = True;
                 }
 

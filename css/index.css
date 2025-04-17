@@ -31,8 +31,7 @@ body {
     font-size: 1.1rem;
     background-color: #415b8b;
     height: 100vh;
-    overflow-x: auto;
-    overflow-y: scroll;
+    overflow: auto;
 }
 
 a {
@@ -545,6 +544,10 @@ select {
     padding: 0.5rem;
 }
 
+.form_container > .form_inputs > label {
+    font-size: 1.3rem;
+}
+
 .form_container > .form_inputs > input,
 .form_container > .form_inputs > textarea {
     font-size: 1.25rem;
@@ -687,6 +690,7 @@ select {
 .dashboard_wrapper > .dashboard_content {
     flex: 1;
     padding: 0 0.5rem;
+    overflow-x: auto;
 }
 
 .data_view_small_screen {
@@ -718,9 +722,8 @@ select {
 }
 
 .data_view_large_screen {
-    margin: 1rem 0;
+    margin-top: 1rem;
     width: 100%;
-    overflow-x: auto;
 }
 
 .data_view_large_screen th {
@@ -738,22 +741,62 @@ select {
     background-color: rgba(128, 128, 128, 0.4);
 }
 
-.data_view_large_screen .dashboard_actions > button,
-.data_view_small_screen > .data_container > .actions > button {
-    color: black;
-    padding: 0.5rem;
-    border-radius: 5px;
-    font-size: 1.1rem;
+.data_view_large_screen .dashboard_actions {
+    display: flex;
+    column-gap: 0.25rem;
+}
+
+.dashboard_actions_mobile {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.25rem;
+}
+
+.data_view_large_screen .dashboard_actions > .edit,
+.dashboard_actions_mobile > .edit {
+    background-color: hsl(0, 0%, 76%);
+}
+
+.data_view_large_screen .dashboard_actions > .edit:hover,
+.dashboard_actions_mobile > .edit:hover {
+    background-color: hsl(0, 0%, 86%);
 }
 
 .data_view_large_screen .dashboard_actions > .delete,
-.data_view_small_screen > .data_container > .actions > .delete {
+.dashboard_actions_mobile > .delete {
     background-color: hsl(6, 93%, 71%);
 }
 
 .data_view_large_screen .dashboard_actions > .delete:hover,
-.data_view_small_screen > .data_container > .actions > .delete:hover {
+.dashboard_actions_mobile > .delete:hover {
     background-color: hsl(6, 93%, 61%);
+}
+
+.dashboard_actions_mobile > a {
+    display: flex;
+    justify-content: center;
+    border-radius: 5px;
+    padding: 0.5rem;
+}
+
+.data_view_large_screen .dashboard_actions > a {
+    display: flex;
+    width: max-content;
+    height: max-content;
+    border-radius: 5px;
+    padding: 0.5rem;
+}
+
+.dashboard_actions_mobile > a > div {
+    display: flex;
+    text-align: center;
+    color: black;
+}
+
+.data_view_large_screen .dashboard_actions > a > div{
+    display: flex;
+    width: max-content;
+    color: black;
 }
 
 .dashboard_body_wrapper {

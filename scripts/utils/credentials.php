@@ -34,6 +34,7 @@ function filterCredentials(array &$credentials, string $key, string $value) {
     unset($credentials);
 }
 
+// For page form
 function fillInPreviousData(string $key) {
     $value = '';
 

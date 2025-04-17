@@ -34,19 +34,14 @@
                                 </div>
                                 <div class="actions">
                                     <h3>Actions</h3>
-                                    <button class="edit">Edit</button>
-                                    <button class="delete">Delete</button>
-                                </div>
-                            </div>
-                            <div class="data_container">
-                                <div class="data">
-                                    <h3>Name</h3>
-                                    <p>Test</p>
-                                </div>
-                                <div class="actions">
-                                    <h3>Actions</h3>
-                                    <button class="edit">Edit</button>
-                                    <button class="delete">Delete</button>
+                                    <div class="dashboard_actions_mobile">
+                                        <a href="#" class="edit">
+                                            <div>Edit</div>
+                                        </a>
+                                        <a href="#" class="delete">
+                                            <div>Delete</div>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -59,38 +54,12 @@
                                 <td>Test1</td>
                                 <td>
                                     <div class="dashboard_actions">
-                                        <button class="edit">Edit</button>
-                                        <button class="delete">Delete</button>
-                                    </div>
-                                </td>
-                                
-                            </tr>
-                            <tr>
-                                <td>Test1</td>
-                                <td>
-                                    <div class="dashboard_actions">
-                                        <button class="edit">Edit</button>
-                                        <button class="delete">Delete</button>
-                                    </div>
-                                </td>
-                                
-                            </tr>
-                            <tr>
-                                <td>Test1</td>
-                                <td>
-                                    <div class="dashboard_actions">
-                                        <button class="edit">Edit</button>
-                                        <button class="delete">Delete</button>
-                                    </div>
-                                </td>
-                                
-                            </tr>
-                            <tr>
-                                <td>Test1</td>
-                                <td>
-                                    <div class="dashboard_actions">
-                                        <button class="edit">Edit</button>
-                                        <button class="delete">Delete</button>
+                                        <a href="#" class="edit">
+                                            <div>Edit</div>
+                                        </a>
+                                        <a href="#" class="delete">
+                                            <div>Delete</div>
+                                        </a>
                                     </div>
                                 </td>
                                 

@@ -147,7 +147,7 @@
                 }
                 else {
                     $_SESSION['signin_error'] = 'Can\'t find user. Please Try Again.';
-                    header("location:".DOMAIN_NAME.'pages/forms/signin.php');
+                    rollback();
                 }
 
             }

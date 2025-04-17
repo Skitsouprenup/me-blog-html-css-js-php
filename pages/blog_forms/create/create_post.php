@@ -15,12 +15,12 @@
             <div class="form_container">
                 <h2>Create Post</h2>
                 <form class="form_inputs" action="">
-                    <input type="text" placeholder="Title..."/>
-                    <textarea rows=4 placeholder="Description..."></textarea>
+                    <input type="text" name="title" placeholder="Title..."/>
+                    <textarea rows=4 name="description" placeholder="Description..."></textarea>
 
                     <div class="post_category">
                         <p>Select Category: </p>
-                        <select>
+                        <select name="category">
                             <option value="gaming">Gaming</option>
                             <option value="tech">Technology&nbsp;&nbsp;&nbsp;</option>
                             <option value="art">Art</option>
