@@ -585,13 +585,27 @@ select {
     color: inherit;
 }
 
-.form_error_message {
+.form_container > .form_inputs > .failed_msg {
+    display: flex;
     text-align: center;
-    font-size: 1.25rem;
-    background-color: salmon;
-    border-radius: 3px;
-    padding: 5px;
-    color: red;
+    font-size: 1.35rem;
+    background-color: hsla(357, 74%, 48%, 0.8);
+    border-radius: 5px;
+    padding: 0.5rem;
+    color: rgb(231, 137, 137);
+}
+
+.form_container > .form_inputs > .failed_msg > p {
+    text-align: center;
+    flex: 1;
+}
+
+.form_container > .form_inputs > .failed_msg > button {
+    background-color: transparent;
+}
+
+.form_container > .form_inputs > .failed_msg > button:hover > svg{
+    fill: yellowgreen;
 }
 
 .have_account, .no_account {
@@ -640,9 +654,11 @@ select {
 
 .dashboard_container {
     display: flex;
+    flex-direction: column;
     column-gap: 2rem;
+    row-gap: 1rem;
     padding: 2rem 1rem;
-    justify-content: center;
+    align-items: center;
     flex-grow: 1;
 }
 
@@ -650,6 +666,48 @@ select {
     display: flex;
     width: 95%;
     justify-content: center;
+}
+
+.dashboard_container > .success_msg {
+    display: flex;
+    align-items: center;
+    font-size: 1.35rem;
+    width: 95%;
+    background-color: hsla(140, 92%, 24%, 0.8);
+    border-radius: 5px;
+    padding: 0.5rem;
+    color: rgb(231, 137, 137);
+}
+
+.dashboard_container > .failed_msg{
+    display: flex;
+    text-align: center;
+    font-size: 1.35rem;
+    width: 95%;
+    background-color: hsla(357, 74%, 48%, 0.8);
+    border-radius: 5px;
+    padding: 0.5rem;
+    color: rgb(231, 137, 137);
+}
+
+.dashboard_container > .success_msg > p,
+.dashboard_container > .failed_msg > p,
+.form_container > .failed_msg > p {
+    text-align: center;
+    flex: 1;
+}
+
+.dashboard_container > .success_msg > button,
+.dashboard_container > .failed_msg > button {
+    background-color: transparent;
+}
+
+.dashboard_container > .success_msg > button:hover > svg{
+    fill: red;
+}
+
+.dashboard_container > .failed_msg > button:hover > svg {
+    fill: yellowgreen;
 }
 
 .dashboard_side_bar {
@@ -690,6 +748,9 @@ select {
 .dashboard_wrapper > .dashboard_content {
     flex: 1;
     padding: 0 0.5rem;
+}
+
+.dashboard_wrapper > .dashboard_content > .data_list_content {
     overflow-x: auto;
 }
 

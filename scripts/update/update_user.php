@@ -3,6 +3,7 @@ require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/constants.php";
 require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/scripts/utils/credentials.php";
 
 $abort = function() {
+    $_SESSION['dashboard_abort_msg'] = "Operation Aborted. Unexpected Error.";
     header('location:'.DOMAIN_NAME.'pages/views/dashboard/manage_users.php');
     exit();
 };
@@ -48,9 +49,13 @@ if(isset($_POST['submit'])) {
     $connection->query($update_query);
 
     if($connection->errno) {
-        $_SESSION['signin_error'] = 'Can\'t update user. Contact Administrator if possible.';
+        $_SESSION['update_user_error'] = 'Can\'t update user. Contact Administrator if possible.';
         rollback();
-    } else header('location:'.DOMAIN_NAME.'pages/views/dashboard/manage_users.php');
+    } else {
+        $name = $credentials['firstname'][0].' '.$credentials['lastname'][0];
+        header('location:'.DOMAIN_NAME.'pages/views/dashboard/manage_users.php');
+        $_SESSION['dashboard_success_msg'] = "User $name has been updated!";
+    }
 
 } else $abort();
 ?>

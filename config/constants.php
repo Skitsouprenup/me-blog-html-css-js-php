@@ -9,6 +9,10 @@
     define('DOMAIN_NAME', 'http://localhost/projects/blog-app/');
     define('ROOT_PATH', $_SERVER["DOCUMENT_ROOT"].$ds.'projects'.$ds.'blog-app'.$ds);
 
+    define('FORM_ERROR_MSG_PANEL', ".form_inputs > .failed_msg");
+    define('DASHBOARD_ABORT_PANEL', ".dashboard_container > .failed_msg");
+    define('DASHBOARD_SUCCESS_PANEL', ".dashboard_container > .success_msg");
+
     enum PageAccess:string {
         case Public = 'public';
         case LoginRequired = 'login_required';
