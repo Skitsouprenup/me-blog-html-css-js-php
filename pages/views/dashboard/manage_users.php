@@ -23,8 +23,10 @@
         $end = end($usernames);
         if(!isset($end)) array_pop($usernames);
     }
-
     $connection->close();
+
+    $operation = 'user';
+    $dialog_box_title = 'Delete User';
 
 ?>
 
@@ -39,6 +41,7 @@
 
         <div class="dashboard_body_wrapper">
             <?php include ROOT_PATH.'pages'.$ds.'partials'.$ds.'dashboard'.$ds.'sidebar_items_mobile.php'; ?>
+            <?php include ROOT_PATH.'pages'.$ds.'partials'.$ds.'dashboard'.$ds.'dialog_box.php'; ?>
 
         <!-- navigation menu -->
             <?php include ROOT_PATH.'pages'.$ds.'partials'.$ds.'nav.php'; ?>
@@ -106,7 +109,10 @@
                                                 >
                                                     <div>Edit</div>
                                                 </a>
-                                                <a href="#" class="delete">
+                                                <a 
+                                                    href="#" class="delete"
+                                                    onclick="showDeleteDialogBox('<?php echo $list['username']?>')"
+                                                >
                                                     <div>Delete</div>
                                                 </a>
                                             </div>

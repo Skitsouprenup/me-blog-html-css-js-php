@@ -848,15 +848,15 @@ select {
     padding: 0.5rem;
 }
 
-.dashboard_actions_mobile > a > div {
-    display: flex;
-    text-align: center;
-    color: black;
-}
-
 .data_view_large_screen .dashboard_actions > a > div{
     display: flex;
     width: max-content;
+    color: black;
+}
+
+.dashboard_actions_mobile > a > div {
+    display: flex;
+    text-align: center;
     color: black;
 }
 
@@ -868,9 +868,77 @@ select {
     height: 100vh;
 }
 
+/*Dialog Box*/
+
+.dashboard_dialog_box_wrapper {
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+}
+
+.dashboard_dialog_box_wrapper > .dashboard_dialog_box {
+    position: fixed;
+    display: flex;
+    z-index: 20;
+    flex-direction: column;
+    width: 500px;
+    border-radius: 10px;
+    padding: 1rem;
+    border: 1px solid red;
+    background-color: darkslateblue;
+    row-gap: 0.75rem;
+}
+
+.dashboard_dialog_box_wrapper > .dashboard_dialog_box > .info {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+    align-items: center;
+}
+
+.dashboard_dialog_box > .info > .description {
+    font-size: 1.5rem;
+}
+
+.dashboard_dialog_box > .interface {
+    display: flex;
+    justify-content: center;
+}
+
+.dashboard_dialog_box > .interface > a {
+    display: flex;
+    width: max-content;
+    height: max-content;
+    border-radius: 5px;
+    padding: 0.5rem;
+    background-color: hsl(6, 93%, 71%);
+}
+
+.dashboard_dialog_box > .interface > a > div{
+    display: flex;
+    width: max-content;
+    color: black;
+}
+
+.dashboard_dialog_box > .interface > a:hover {
+    background-color: hsl(6, 93%, 61%);
+}
+
+.dashboard_dialog_box_wrapper > .dashboard_dialog_box > button {
+    position: absolute;
+    left: calc(100% - 24px - 0.25rem);
+    top: 0.25rem;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.dashboard_dialog_box_wrapper > .dashboard_dialog_box > button:hover > svg {
+    fill: salmon;
+}
+
 /* Dashboard's Sidebar */
 .dashboard_body_wrapper > .sidebar_toggle_bg,
-.dashboard_body_wrapper > .dashboard_dialog_box_bg {
+.dashboard_body_wrapper > .dashboard_dialog_box_wrapper {
     background-color: rgba(128, 128, 128, 0.4);
     position: fixed;
     display: none;
