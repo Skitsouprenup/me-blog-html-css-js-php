@@ -869,12 +869,13 @@ select {
 }
 
 /* Dashboard's Sidebar */
-.dashboard_body_wrapper > .sidebar_toggle_bg {
+.dashboard_body_wrapper > .sidebar_toggle_bg,
+.dashboard_body_wrapper > .dashboard_dialog_box_bg {
     background-color: rgba(128, 128, 128, 0.4);
     position: fixed;
     display: none;
     width: 100vw;
-    height: 100%;
+    height: 100vh;
 }
 
 .dashboard_body_wrapper > .arrow_left,

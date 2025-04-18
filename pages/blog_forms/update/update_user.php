@@ -2,6 +2,8 @@
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/constants.php";
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/scripts/utils/credentials.php";
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/db_constants.php";
+    
+    require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/page_access.php";
     pageAccessControl(__FILE__);
 
     $abort = function() {
