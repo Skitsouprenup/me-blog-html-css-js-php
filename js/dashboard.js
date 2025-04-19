@@ -43,7 +43,10 @@ const dialogBoxBg = document.querySelector('.dashboard_body_wrapper > .dashboard
 const dialogBox = document.querySelector('.dashboard_dialog_box_wrapper > .dashboard_dialog_box')
 const dialogDesc = document.querySelector('.dashboard_dialog_box > .info > .description')
 
-const showDeleteDialogBox = (item) => {
+const showDeleteDialogBox = (item, link, dboxBtn) => {
+  const dialogBoxBtn = document.querySelector(dboxBtn)
+  dialogBoxBtn.href = link
+  
   dialogBoxBg.style.display = 'flex'
   dialogBox.style.display = 'flex'
   dialogDesc.textContent = `Are you sure you want to delete \'${item}\'?`

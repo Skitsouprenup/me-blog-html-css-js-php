@@ -7,7 +7,10 @@
     pageAccessControl(__FILE__);
 
     $select_sidebar_item_query = '.dashboard_side_bar > a > #manage_users_sidebar_item';
-    $update_user_page = DOMAIN_NAME.'pages/blog_forms/update/update_user.php';
+    $dialog_box_delete_btn = '.dashboard_dialog_box > .interface > .delete_user';
+
+    $update_user_page = DOMAIN_NAME.'pages/forms/dashboard/update/update_user.php';
+    $delete_user_script = DOMAIN_NAME."scripts/delete/delete_user.php?username=";
 
     $fetch_users = "SELECT id,firstname,lastname,username,role from users";
     $result = $connection->query($fetch_users);
@@ -43,7 +46,7 @@
             <?php include ROOT_PATH.'pages'.$ds.'partials'.$ds.'dashboard'.$ds.'sidebar_items_mobile.php'; ?>
             <?php include ROOT_PATH.'pages'.$ds.'partials'.$ds.'dashboard'.$ds.'dialog_box.php'; ?>
 
-        <!-- navigation menu -->
+         <!-- navigation menu -->
             <?php include ROOT_PATH.'pages'.$ds.'partials'.$ds.'nav.php'; ?>
 
             <div class="dashboard_container">
@@ -109,12 +112,16 @@
                                                 >
                                                     <div>Edit</div>
                                                 </a>
-                                                <a 
-                                                    href="#" class="delete"
-                                                    onclick="showDeleteDialogBox('<?php echo $list['username']?>')"
+                                                <button type="button" class="delete"
+                                                    <?php 
+                                                        echo "onclick=\"showDeleteDialogBox(".
+                                                        "'".$list['username']."',".
+                                                        "'".$delete_user_script.$list['username']."',".
+                                                        "'".$dialog_box_delete_btn."')\""
+                                                    ?>
                                                 >
-                                                    <div>Delete</div>
-                                                </a>
+                                                    Delete
+                                                </button>
                                             </div>
                                         </td>
                                         
@@ -126,21 +133,19 @@
                 </div>
             </div>
 
-        <!-- Footer  -->
+         <!-- Footer  -->
             <?php include ROOT_PATH.'pages'.$ds.'partials'.$ds.'footer.php'; ?>
-            <!-- 
-                This script is in the bottom because we want to load all
-                html elements first before executing this script 
-            -->
-            <script>
-                const select_sidebar_item = (query) => {
-                    document.querySelector(query).classList.add('selected')
-                }
-
-                select_sidebar_item("<?= $select_sidebar_item_query ?>")
-            </script>
         </div>
+        <!-- 
+            This script is in the bottom because we want to load all
+            html elements first before executing this script 
+        -->
+        <script>
+            const select_sidebar_item = (query) => {
+                document.querySelector(query).classList.add('selected')
+            }
 
-        
+            select_sidebar_item("<?= $select_sidebar_item_query ?>")
+        </script>
     </body>
 </html>

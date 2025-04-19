@@ -23,7 +23,7 @@
         <div class="dashboard_body_wrapper">
             <?php include ROOT_PATH.'pages'.$ds.'partials'.$ds.'dashboard'.$ds.'sidebar_items_mobile.php'; ?>
 
-        <!-- navigation menu -->
+         <!-- navigation menu -->
             <?php include ROOT_PATH.'pages'.$ds.'partials'.$ds.'nav.php'; ?>
 
             <div class="dashboard_container">
@@ -73,9 +73,9 @@
                                             <a href="#" class="edit">
                                                 <div>Edit</div>
                                             </a>
-                                            <a href="#" class="delete">
-                                                <div>Delete</div>
-                                            </a>
+                                            <button type="button" class="delete">
+                                                Delete
+                                            </button>
                                         </div>
                                     </td>
                                     
@@ -87,22 +87,19 @@
                 </div>
             </div>
 
-        <!-- Footer  -->
+         <!-- Footer  -->
             <?php include ROOT_PATH.'pages'.$ds.'partials'.$ds.'footer.php'; ?>
-
-            <!-- 
-                This script is in the bottom because we want to load all
-                html elements first before executing this script 
-            -->
-            <script>
-                const select_sidebar_item = (query) => {
-                    document.querySelector(query).classList.add('selected')
-                }
-
-                select_sidebar_item("<?= $select_sidebar_item_query ?>")
-            </script>
         </div>
+        <!-- 
+            This script is in the bottom because we want to load all
+            html elements first before executing this script 
+        -->
+        <script>
+            const select_sidebar_item = (query) => {
+                document.querySelector(query).classList.add('selected')
+            }
 
-        
+            select_sidebar_item("<?= $select_sidebar_item_query ?>")
+        </script>
     </body>
 </html>

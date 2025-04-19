@@ -17,13 +17,26 @@
                     str_replace('/',$this->ds,"/scripts/create/signin.php"),
                     str_replace('/',$this->ds,"/scripts/create/signup.php"),
                     str_replace('/',$this->ds,"/scripts/delete/logout.php")
-                ].
+                ],
                 'login_required' => [],
                 'admin_login_required' => [
                     str_replace('/',$this->ds,"/scripts/delete/delete_user.php"),
                     str_replace('/',$this->ds,"/scripts/update/update_user.php")
                 ]
             ];
+
+            foreach($api_access_list as $list_key => $api_list) {
+                foreach($api_list as $api) {
+                    if($api_path === $api) {
+                        $api_access = $list_key;
+                        break;
+                    }
+                }
+    
+                if(isset($api_access)) break;
+            }
+
+            return $api_access;
         }
     }
 

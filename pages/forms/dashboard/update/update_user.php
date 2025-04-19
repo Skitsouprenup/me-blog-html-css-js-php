@@ -1,15 +1,11 @@
 <?php
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/constants.php";
+    require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/dashboard_op_constants.php";
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/scripts/utils/credentials.php";
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/db_constants.php";
     
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/page_access.php";
     pageAccessControl(__FILE__);
-
-    $abort = function() {
-        header('location:'.DOMAIN_NAME.'pages/views/dashboard/manage_users.php');
-        exit();
-    };
 
     $error_msg = NULL;
     if(isset($_SESSION['update_user_error'])) {
@@ -33,11 +29,11 @@
 
         if ($result->num_rows > 0) {
             $GLOBALS['user_info'] = $result->fetch_assoc();
-        } else $abort();
+        } else $abort_dashboard_op();
 
         $connection->close();
     } else {
-        $abort();
+        $abort_dashboard_op();
     }
 ?>
 
