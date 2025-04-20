@@ -2,7 +2,6 @@
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/constants.php";
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/dashboard_op_constants.php";
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/scripts/utils/credentials.php";
-    require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/db_constants.php";
     
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/page_access.php";
     pageAccessControl(__FILE__);
@@ -15,25 +14,32 @@
 
     $user_info = NULL;
     $update_page = DOMAIN_NAME.'scripts/update/update_user.php';
+    $abort_redirect = DOMAIN_NAME.'pages/views/dashboard/manage_users.php';
 
     #$rollback is in credentials.php
+    #Get previous form value from previous session
     if(isset($rollback)) {
         $GLOBALS['user_info'] = $rollback;
+        unset($rollback);
     }
 
-    if(isset($_GET['username']) && !isset($rollback)) {
-        $username = filter_var($_GET['username'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    //Get info from database if there's no previous form value
+    if(isset($_GET['username']) && !isset($user_info)) {
+        require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/db_constants.php";
 
+        $username = filter_var($_GET['username'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $fetch_users = "SELECT firstname,lastname,username,role FROM users WHERE username='$username'";
         $result = $connection->query($fetch_users);
 
         if ($result->num_rows > 0) {
             $GLOBALS['user_info'] = $result->fetch_assoc();
-        } else $abort_dashboard_op();
+        } else $abort_dashboard_op($abort_redirect);
 
         $connection->close();
-    } else {
-        $abort_dashboard_op();
+    }
+
+    if(!isset($_GET['username'])){
+        $abort_dashboard_op($abort_redirect);
     }
 ?>
 
@@ -51,16 +57,16 @@
                 <form class="form_inputs" action=<?php echo $update_page?> method="post">
                     <label for="firstname">First Name</label>
                     <input 
-                        type="text" value=<?php echo $user_info['firstname']?> 
+                        type="text" value="<?php echo $user_info['firstname'] ?? ''?>" 
                         name="firstname" placeholder="First Name..."
                     />
                     <label for="lastname">Last Name</label>
                     <input 
-                        type="text" value=<?php echo $user_info['lastname']?>  
+                        type="text" value="<?php echo $user_info['lastname'] ?? ''?>"  
                         name="lastname" placeholder="Last Name..."
                     />
                     <label for="role">Role</label>
-                    <select name="role" value=<?php echo $user_info['role']?>>
+                    <select name="role" value="<?php echo $user_info['role'] ?? ''?>">
                         <option value="admin">Admin</option>
                         <option value="author">Author</option>
                     </select>
@@ -74,7 +80,7 @@
                             </button>
                         </div>
                     <?php endif?>
-                    <input type="hidden" name="username" value=<?php echo $user_info['username'] ?>/>
+                    <input type="hidden" name="username" value=<?php echo $user_info['username'] ?? ''?>/>
                     <button type="submit" name="submit">Update User</button>
                 </form>
             </div>

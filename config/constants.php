@@ -22,4 +22,15 @@
         case Author = 'author';
     }
     
+    function trim_text(string $text, int $threshold = 10) {
+        if($threshold < 10) return $text;
+
+        $trim_ln = 7;
+        $ln = strlen($text);
+
+       if($ln > $threshold) return substr($text, 0, $trim_ln)."...";
+
+       return $text;
+    }
+
 ?>

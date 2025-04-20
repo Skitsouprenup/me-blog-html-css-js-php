@@ -51,3 +51,14 @@ for(let x of navItemsMobile) {
 function closeMessagePanel(query) {
     document.querySelector(query).style.display = 'none';
 }
+
+function trim_text(text, threshold = 10) {
+    if(threshold < 10) return text;
+
+    trim_ln = 7;
+    ln = text.length;
+
+   if(ln > threshold) return text.substring(0, trim_ln)+"...";
+
+   return text;
+}

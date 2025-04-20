@@ -51,7 +51,7 @@
     </a>
 
     <?php if(UserRoles::Admin === UserRoles::from($user_session['role'])):?>
-        <a href="#">
+        <a href=<?php echo DOMAIN_NAME.'pages/forms/dashboard/create/create_category.php'?>>
             <div class="icon_link" id="add_category_sidebar_item">
                 <div class="icon_link_wrapper">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-tags" viewBox="0 0 16 16">

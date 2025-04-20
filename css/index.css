@@ -835,6 +835,20 @@ select {
     background-color: hsl(6, 93%, 61%);
 }
 
+.dashboard_actions_mobile > button {
+    /*
+        For some reason, this button doesn't automatically inherit
+        font-size and font-family.
+    */
+    font-size: inherit;
+    font-family: inherit;
+    cursor: pointer;
+    color: black;
+    border-radius: 5px;
+    padding: 0.5rem;
+    transition: var(--general-transition);
+}
+
 .dashboard_actions_mobile > a {
     display: flex;
     justify-content: center;
@@ -853,6 +867,7 @@ select {
     color: black;
     border-radius: 5px;
     padding: 0.5rem;
+    transition: var(--general-transition);
 }
 
 .data_view_large_screen .dashboard_actions > a {

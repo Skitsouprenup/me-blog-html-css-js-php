@@ -49,7 +49,7 @@ const showDeleteDialogBox = (item, link, dboxBtn) => {
   
   dialogBoxBg.style.display = 'flex'
   dialogBox.style.display = 'flex'
-  dialogDesc.textContent = `Are you sure you want to delete \'${item}\'?`
+  dialogDesc.textContent = `Are you sure you want to delete \'${trim_text(item)}\'?`
 }
 
 const hideDialogBox = () => {

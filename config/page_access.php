@@ -33,9 +33,9 @@
                 'admin_login_required' => [
                     str_replace('/',$this->ds,"/pages/views/dashboard/manage_category.php"),
                     str_replace('/',$this->ds,"/pages/views/dashboard/manage_users.php"),
-                    str_replace('/',$this->ds,"/pages/blog_forms/create/create_category.php"),
-                    str_replace('/',$this->ds,"/pages/blog_forms/update/update_category.php"),
-                    str_replace('/',$this->ds,"/pages/blog_forms/update/update_user.php")
+                    str_replace('/',$this->ds,"/pages/forms/dashboard/create/create_category.php"),
+                    str_replace('/',$this->ds,"/pages/forms/dashboard/update/update_category.php"),
+                    str_replace('/',$this->ds,"/pages/forms/dashboard/update/update_user.php")
                 ]
             ];
 

@@ -5,6 +5,8 @@
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/api_access.php";
     apiAccessControl(__FILE__);
 
+    $abort_redirect = DOMAIN_NAME.'pages/views/dashboard/manage_users.php';
+
     if(isset($_GET['username'])) {
         require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/db_constants.php";
 
@@ -30,16 +32,14 @@
 
             $name = $row['firstname'][0].' '.$row['lastname'][0];
             if($connection->errno) {
-                $abort_dashboard_op(true, 'Can\'t delete \''.$name.'\'. Contact Administrator if possible.');
+                $abort_dashboard_op($abort_redirect,true,'Can\'t delete \''.$name.'\'. Contact Administrator if possible.');
             } else {
                 
                 header('location:'.DOMAIN_NAME.'pages/views/dashboard/manage_users.php');
                 $_SESSION['dashboard_success_msg'] = "User $name has been deleted!";
             }
 
-        } else $abort_dashboard_op(true);
+        } else $abort_dashboard_op($abort_redirect,true);
 
-        $connection->close();
-
-    } else $abort_dashboard_op();
+    } else $abort_dashboard_op($abort_redirect);
 ?>

@@ -83,9 +83,16 @@
                                                 >
                                                     <div>Edit</div>
                                                 </a>
-                                                <a href="#" class="delete">
-                                                    <div>Delete</div>
-                                                </a>
+                                                <button type="button" class="delete"
+                                                    <?php 
+                                                        echo "onclick=\"showDeleteDialogBox(".
+                                                        "'".$list['username']."',".
+                                                        "'".$delete_user_script.$list['username']."',".
+                                                        "'".$dialog_box_delete_btn."')\""
+                                                    ?>
+                                                >
+                                                    Delete
+                                                </button>
                                             </div>
                                         </div>
                                     <?php endforeach?>

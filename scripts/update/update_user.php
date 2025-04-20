@@ -6,11 +6,13 @@ require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/scripts/utils/credentials.
 require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/api_access.php";
 apiAccessControl(__FILE__);
 
+$abort_redirect = DOMAIN_NAME.'pages/views/dashboard/manage_users.php';
+
 if(isset($_POST['submit'])) {
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/db_constants.php";
     
-    function rollback() {
-        header('location:'.DOMAIN_NAME.'pages/blog_forms/update/update_users.php?username='.$username);
+    function rollback(string $username = "") {
+        header('location:'.DOMAIN_NAME.'pages/forms/dashboard/update/update_user.php?username='.$username);
         unset($_POST['submit']);
         $_SESSION['post_data'] = $_POST;
     }
@@ -30,13 +32,13 @@ if(isset($_POST['submit'])) {
         }
     }
 
-    if(isset($_SESSION['update_user_error'])) {
-        rollback();
-        exit();
-    }
-
     #Remove the '/' added by <hidden> tag?
     $username = str_replace("/", "", $credentials['username'][0]);
+
+    if(isset($_SESSION['update_user_error'])) {
+        rollback($username);
+        exit();
+    }
 
     #'LIMIT 1' means, only update one record. Optional.
     $update_query = "UPDATE users SET ".
@@ -48,12 +50,12 @@ if(isset($_POST['submit'])) {
 
     if($connection->errno) {
         $_SESSION['update_user_error'] = 'Can\'t update user. Contact Administrator if possible.';
-        rollback();
+        rollback($username);
     } else {
         $name = $credentials['firstname'][0].' '.$credentials['lastname'][0];
         header('location:'.DOMAIN_NAME.'pages/views/dashboard/manage_users.php');
-        $_SESSION['dashboard_success_msg'] = "User $name has been updated!";
+        $_SESSION['dashboard_success_msg'] = "User '$name' has been updated!";
     }
 
-} else $abort_dashboard_op();
+} else $abort_dashboard_op($abort_redirect);
 ?>
