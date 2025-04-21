@@ -1,11 +1,9 @@
 <?php
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/constants.php";
-    
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/page_access.php";
     pageAccessControl(__FILE__);
 
     $create_category_script = DOMAIN_NAME."scripts/create/create_category.php";
-    $abort_redirect = DOMAIN_NAME.'pages/views/dashboard/manage_category.php';
 
     $error_msg = NULL;
     if(isset($_SESSION['create_category_error'])) {

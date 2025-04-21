@@ -27,8 +27,8 @@
                 ],
                 'login_required' => [
                     str_replace('/',$this->ds,"/pages/views/dashboard/manage_posts.php"),
-                    str_replace('/',$this->ds,"/pages/blog_forms/create/create_post.php"),
-                    str_replace('/',$this->ds,"/pages/blog_forms/create/update_post.php")
+                    str_replace('/',$this->ds,"/pages/forms/dashboard/create/create_post.php"),
+                    str_replace('/',$this->ds,"/pages/forms/dashboard/create/update_post.php")
                 ],
                 'admin_login_required' => [
                     str_replace('/',$this->ds,"/pages/views/dashboard/manage_category.php"),

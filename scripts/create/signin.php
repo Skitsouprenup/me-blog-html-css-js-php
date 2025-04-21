@@ -1,6 +1,5 @@
 <?php
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/constants.php";
-    require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/db_constants.php";
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/scripts/utils/credentials.php";
 
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/api_access.php";
@@ -17,6 +16,8 @@
 
     //If 'submit' is set, it means that it has been clicked
     if(isset($_POST['submit'])) {
+        require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/db_constants.php";
+
         $credentials = [];
 
         /* Validation */
@@ -64,10 +65,10 @@
                 $_SESSION['signin_error'] = 'Can\'t find user. Check your username or email.';
                 rollback();
             }
-
-            //Close Database Connection
-            $connection->close();
         } else rollback();
+
+        //Close Database Connection
+        $connection->close();
 
     } else header("location:".DOMAIN_NAME.'pages/forms/signin.php');
 ?>

@@ -56,6 +56,6 @@ if(isset($_POST['submit'])) {
         header('location:'.DOMAIN_NAME.'pages/views/dashboard/manage_users.php');
         $_SESSION['dashboard_success_msg'] = "User '$name' has been updated!";
     }
-
+    $connection->close();
 } else $abort_dashboard_op($abort_redirect);
 ?>

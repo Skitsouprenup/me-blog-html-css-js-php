@@ -20,9 +20,9 @@
             $abort_dashboard_op($abort_redirect,true,'Can\'t delete \''.$title.'\'. Please Try Again.');
         } else {
             header('location:'.DOMAIN_NAME.'pages/views/dashboard/manage_category.php');
-            $_SESSION['dashboard_success_msg'] = "User $name has been deleted!";
+            $_SESSION['dashboard_success_msg'] = "Category '$title' has been deleted!";
         }
-
+        $connection->close();
     } else $abort_dashboard_op($abort_redirect);
 
 ?>

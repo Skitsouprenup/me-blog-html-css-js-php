@@ -545,6 +545,13 @@ select {
     padding: 0.5rem;
 }
 
+.form_container > .form_inputs > .create_post_inputs {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    padding: 0.5rem 0;
+}
+
 .form_container > .form_inputs > label {
     font-size: 1.3rem;
 }
@@ -575,14 +582,16 @@ select {
     width: fit-content;
 }
 
-.form_container > .form_inputs select {
+.form_container > .form_inputs select,
+.form_container > .form_inputs > .create_post_inputs > select {
     color: black;
     font-size: inherit;
-    padding: 0.5rem;
+    padding: 0.55rem;
     border-radius: 0.2rem;
 }
 
-.form_container > .form_inputs select > option {
+.form_container > .form_inputs select > option,
+.form_container > .form_inputs > .create_post_inputs > option {
     color: inherit;
 }
 
@@ -627,9 +636,11 @@ select {
 
 .post_category {
     display: flex;
+    flex-direction: column;
+    width: fit-content;
     font-size: 1rem;
-    align-items: center;
-    column-gap: 5px;
+    row-gap: 0.25rem;
+    padding-right: 1rem;
 }
 
 .post_category > p {

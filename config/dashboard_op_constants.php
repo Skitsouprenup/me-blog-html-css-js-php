@@ -9,4 +9,5 @@ $abort_dashboard_op = function(string $location, bool $close_db = false, string 
 
     exit();
 };
+
 ?>

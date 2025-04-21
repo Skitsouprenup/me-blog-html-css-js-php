@@ -78,7 +78,7 @@
                 //The temporary image file will be discarded.
                 $avatar_tmp_name = $avatar['tmp_name'];
 
-                $avatar_dest = ROOT_PATH.'images/avatar/'.$avatar_name;
+                $avatar_dest = ROOT_PATH.'images'.$ds.'avatar'.$ds.$avatar_name;
                 global $avatar_dest_client;
                 $avatar_dest_client = DOMAIN_NAME.'images/avatar/'.$avatar_name;
 

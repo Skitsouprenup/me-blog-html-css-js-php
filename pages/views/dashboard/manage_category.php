@@ -1,10 +1,11 @@
 <?php
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/constants.php";
-    require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/db_constants.php";
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/dashboard_constants.php";
 
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/page_access.php";
     pageAccessControl(__FILE__);
+
+    require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/db_constants.php";
 
     $select_sidebar_item_query = '.dashboard_side_bar > a > #manage_categories_sidebar_item';
     $dialog_box_delete_btn = '.dashboard_dialog_box > .interface > .delete_category';

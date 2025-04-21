@@ -18,11 +18,14 @@
                     str_replace('/',$this->ds,"/scripts/create/signup.php"),
                     str_replace('/',$this->ds,"/scripts/delete/logout.php")
                 ],
-                'login_required' => [],
+                'login_required' => [
+                    str_replace('/',$this->ds,"/scripts/create/create_post.php"),
+                ],
                 'admin_login_required' => [
                     str_replace('/',$this->ds,"/scripts/create/create_category.php"),
-                    str_replace('/',$this->ds,"/scripts/update/update_category.php"),
                     str_replace('/',$this->ds,"/scripts/delete/delete_user.php"),
+                    str_replace('/',$this->ds,"/scripts/delete/delete_category.php"),
+                    str_replace('/',$this->ds,"/scripts/update/update_category.php"),
                     str_replace('/',$this->ds,"/scripts/update/update_user.php")
                 ]
             ];

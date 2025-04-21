@@ -1,10 +1,12 @@
 <?php
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/constants.php";
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/scripts/utils/credentials.php";
+    require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/dashboard_op_constants.php";
 
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/api_access.php";
     apiAccessControl(__FILE__);
 
+    $abort_redirect = DOMAIN_NAME.'pages/views/dashboard/manage_category.php';
 
     if(isset($_POST['submit'])) {
         require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/db_constants.php";
@@ -50,5 +52,6 @@
                 $_SESSION['dashboard_success_msg'] = "Category '".trim_text($title)."' has been created!";
             }
         }
-    } else $abort_dashboard_op();
+        $connection->close();
+    } else $abort_dashboard_op($abort_redirect);
 ?>

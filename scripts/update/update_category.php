@@ -56,7 +56,7 @@
             header('location:'.DOMAIN_NAME.'pages/views/dashboard/manage_category.php');
             $_SESSION['dashboard_success_msg'] = "Category '".trim_text($credentials['title'][0])."' has been updated!";
         }
-
+        $connection->close();
     }else $abort_dashboard_op($abort_redirect);
 
 ?>

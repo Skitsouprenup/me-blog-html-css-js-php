@@ -6,9 +6,10 @@
     pageAccessControl(__FILE__);
 
     $select_sidebar_item_query = '.dashboard_side_bar > a > #manage_posts_sidebar_item';
+    $dialog_box_delete_btn = '.dashboard_dialog_box > .interface > .delete_post';
 
-    $failed_msg = NULL;
-    $success_msg = NULL;
+    $operation = 'post';
+    $dialog_box_title = 'Delete Post';
 ?>
 
 <!DOCTYPE html>
@@ -22,6 +23,7 @@
 
         <div class="dashboard_body_wrapper">
             <?php include ROOT_PATH.'pages'.$ds.'partials'.$ds.'dashboard'.$ds.'sidebar_items_mobile.php'; ?>
+            <?php include ROOT_PATH.'pages'.$ds.'partials'.$ds.'dashboard'.$ds.'dialog_box.php'; ?>
 
          <!-- navigation menu -->
             <?php include ROOT_PATH.'pages'.$ds.'partials'.$ds.'nav.php'; ?>
