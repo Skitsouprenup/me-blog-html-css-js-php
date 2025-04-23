@@ -44,10 +44,12 @@
             $connection->query($create_category);
 
             if($connection->errno) {
-                $_SESSION['create_category_error'] = 'Can\'t create category. Please try again.';
+                http_response_code(500);
+                $_SESSION['create_category_error'] = 'Can\'t create category. Internal Server Error.';
                 rollback($title);
             }
             else {
+                http_response_code(200);
                 header('location:'.DOMAIN_NAME.'pages/views/dashboard/manage_category.php');
                 $_SESSION['dashboard_success_msg'] = "Category '".trim_text($title)."' has been created!";
             }

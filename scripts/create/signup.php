@@ -145,16 +145,19 @@
                         'avatar' => $row['avatar'],
                         'role' => $row['role']
                     ];
+                    http_response_code(201);
                     //Head to landing page
                     header("location:".DOMAIN_NAME);
                 }
                 else {
+                    http_response_code(404);
                     $_SESSION['signin_error'] = 'Can\'t find user. Please Try Again.';
                     rollback();
                 }
 
             }
             else {
+                http_response_code(500);
                 rollback();
                 $_SESSION['signup_error'] = "There's a problem with the server.".
                 " Can't sign up. Contact Admin if possible.";
@@ -164,6 +167,9 @@
         unset($GLOBALS['avatar_dest_client']);
         //Close Database Connection
         $connection->close();
-    } else header("location:".DOMAIN_NAME.'pages/forms/signup.php');
+    } else {
+        http_response_code(400);
+        header("location:".DOMAIN_NAME.'pages/forms/signup.php');
+    }
 
 ?>

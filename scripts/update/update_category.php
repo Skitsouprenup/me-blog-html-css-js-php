@@ -50,9 +50,11 @@
         $connection->query($update_query);
 
         if($connection->errno) {
+            http_response_code(500);
             $_SESSION['update_category_error'] = 'Can\'t update category. Please try again.';
             rollback($prev_title);
         } else {
+            http_response_code(200);
             header('location:'.DOMAIN_NAME.'pages/views/dashboard/manage_category.php');
             $_SESSION['dashboard_success_msg'] = "Category '".trim_text($credentials['title'][0])."' has been updated!";
         }

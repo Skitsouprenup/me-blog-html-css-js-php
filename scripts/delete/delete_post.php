@@ -54,13 +54,15 @@
             $connection->query($delete_post);
 
             if($connection->errno) {
+                http_response_code(500);
                 $abort_dashboard_op($abort_redirect,$connection,'Can\'t delete Post. Internal Server Error.');
             } else {
-                
+                http_response_code(200);
                 header('location:'.DOMAIN_NAME.'pages/views/dashboard/manage_posts.php');
                 $_SESSION['dashboard_success_msg'] = "Post '".trim_text($row['title'])."' has been deleted!";
             }
         } else {
+            http_response_code(404);
             $_SESSION['dashboard_abort_msg'] = 'Post can\'t be deleted. Invalid Post.';
             rollback_exit($connection);
         }

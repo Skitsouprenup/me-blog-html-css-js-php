@@ -36,6 +36,7 @@ if(isset($_POST['submit'])) {
     $username = str_replace("/", "", $credentials['username'][0]);
 
     if(isset($_SESSION['update_user_error'])) {
+        http_response_code(400);
         rollback($username);
         exit();
     }
@@ -49,13 +50,18 @@ if(isset($_POST['submit'])) {
     $connection->query($update_query);
 
     if($connection->errno) {
+        http_response_code(500);
         $_SESSION['update_user_error'] = 'Can\'t update user. Contact Administrator if possible.';
         rollback($username);
     } else {
+        http_response_code(200);
         $name = $credentials['firstname'][0].' '.$credentials['lastname'][0];
         header('location:'.DOMAIN_NAME.'pages/views/dashboard/manage_users.php');
         $_SESSION['dashboard_success_msg'] = "User '$name' has been updated!";
     }
     $connection->close();
-} else $abort_dashboard_op($abort_redirect);
+} else {
+    http_response_code(400);
+    $abort_dashboard_op($abort_redirect);
+}
 ?>

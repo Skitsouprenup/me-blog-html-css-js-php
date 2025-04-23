@@ -47,6 +47,7 @@
 
         //First Error check
         if(isset($_SESSION['create_post_error'])) {
+            http_response_code(400);
             rollback_exit($connection);
         }
 
@@ -66,6 +67,7 @@
             $row = $result->fetch_assoc();
             $category_id = $row['id'];
         } else {
+            http_response_code(404);
             $_SESSION['create_post_error'] = 'Invalid category.';
             rollback_exit($connection);
         }
@@ -83,6 +85,7 @@
         $thumb_dest = ROOT_PATH.'images'.$ds.'posts'.$ds.$uploader_id;
         if(!file_exists($thumb_dest)) {
             if(!mkdir($thumb_dest, 0777, true)) {
+                http_response_code(500);
                 $_SESSION['create_post_error'] = 'Can\'t create post. Internal Server Error.';
                 rollback_exit($connection);
             }
@@ -109,6 +112,7 @@
 
         //2nd Error check
         if(isset($_SESSION['create_post_error'])) {
+            http_response_code(400);
             rollback_exit($connection);
         }
 
@@ -123,7 +127,8 @@
         $connection->query($create_post);
 
         if($connection->errno) {
-            $_SESSION['create_post_error'] = 'Can\'t create post. Please try again.';
+            http_response_code(500);
+            $_SESSION['create_post_error'] = 'Can\'t create post. Internal Server Error.';
             rollback_exit($connection);
         }
         else {
@@ -151,6 +156,7 @@
         }
 
         $connection->close();
+        http_response_code(201);
         header('location:'.DOMAIN_NAME.'pages/views/dashboard/manage_posts.php');
 
     } else $abort_dashboard_op($abort_redirect);

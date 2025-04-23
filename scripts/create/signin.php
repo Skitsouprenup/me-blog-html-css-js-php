@@ -53,19 +53,26 @@
                         'avatar' => $row['avatar'],
                         'role' => $row['role']
                     ];
+
+                    http_response_code(200);
                     //Head to landing page
                     header("location:".DOMAIN_NAME);
                 } 
                 else {
+                    http_response_code(400);
                     $_SESSION['signin_error'] = 'Incorrect Password. Please Try Again.';
                     rollback();
                 } 
             }
             else {
+                http_response_code(404);
                 $_SESSION['signin_error'] = 'Can\'t find user. Check your username or email.';
                 rollback();
             }
-        } else rollback();
+        } else {
+            http_response_code(400);
+            rollback();
+        }
 
         //Close Database Connection
         $connection->close();

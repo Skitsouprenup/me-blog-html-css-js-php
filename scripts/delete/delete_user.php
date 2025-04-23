@@ -12,7 +12,7 @@
 
         $username = filter_var($_GET['username'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-        $fetch_users = "SELECT firstname,lastname,avatar FROM users WHERE username='$username'";
+        $fetch_users = "SELECT id,firstname,lastname,avatar FROM users WHERE username='$username'";
         $result = $connection->query($fetch_users);
 
         if ($result->num_rows > 0) {
@@ -24,7 +24,9 @@
             #Delete user image
             if($img_path) unlink($img_path);
 
-            //Delete Post...
+            //Get user posts thumbnails...
+            $fetch_post_thumbs = "SELECT thumbnail FROM posts WHERE id={$row['id']}";
+            $thumbnails = $connection->query($fetch_post_thumbs);
 
             //Delete user data in database
             $delete_user = "DELETE from users WHERE username='$username'";
@@ -32,9 +34,22 @@
 
             $name = $row['firstname'][0].' '.$row['lastname'][0];
             if($connection->errno) {
-                $abort_dashboard_op($abort_redirect,$connection,'Can\'t delete \''.$name.'\'. Contact Administrator if possible.');
+                http_response_code(500);
+                $abort_dashboard_op($abort_redirect,$connection,'Can\'t properly delete \''.$name.'\'. Internal Server Error.');
             } else {
                 
+                // Once user and corresponding posts are deleted, it's time to delete
+                // thumbnails that deleted posts left.
+                if($thumbnails->num_rows > 0) {
+                    while($item = $thumbnails->fetch_assoc()) {
+                        $img_path = str_replace(DOMAIN_NAME,ROOT_PATH,$item);
+                        #replace URL's slash(/) with file path(DIRECTORY_SEPARATOR)
+                        $img_path = str_replace('/',$ds,$img_path);
+                        #Delete old post thumbnail
+                        if($img_path) unlink($img_path);
+                    }
+                }
+
                 header('location:'.DOMAIN_NAME.'pages/views/dashboard/manage_users.php');
                 $_SESSION['dashboard_success_msg'] = "User $name has been deleted!";
             }

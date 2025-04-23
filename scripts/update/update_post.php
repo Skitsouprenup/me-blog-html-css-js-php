@@ -87,6 +87,7 @@
 
             $thumb_old = $row['thumbnail'];
         } else {
+            http_response_code(404);
             $_SESSION['update_post_error'] = 'Invalid Post.';
             rollback_exit($connection, $post_id);
         }
@@ -107,6 +108,7 @@
         }
 
         if(isset($_SESSION['update_post_error'])) {
+            http_response_code(400);
             rollback_exit($connection, $post_id);
         }
 
@@ -126,6 +128,7 @@
             $row = $result->fetch_assoc();
             $category_id = $row['id'];
         } else {
+            http_response_code(404);
             $_SESSION['update_post_error'] = 'Invalid category.';
             rollback_exit($connection, $post_id);
         }
@@ -145,6 +148,7 @@
             $thumb_dest = ROOT_PATH.'images'.$ds.'posts'.$ds.$uploader_id;
             if(!file_exists($thumb_dest)) {
                 if(!mkdir($thumb_dest, 0777, true)) {
+                    http_response_code(500);
                     $_SESSION['update_post_error'] = 'Can\'t update post. Internal Server Error.';
                     rollback_exit($connection, $post_id);
                 }
@@ -171,6 +175,7 @@
 
             //2nd Error check
             if(isset($_SESSION['update_post_error'])) {
+                http_response_code(500);
                 rollback_exit($connection, $post_id);
             }
         }
@@ -198,6 +203,7 @@
         $connection->query($update_post);
 
         if($connection->errno) {
+            http_response_code(500);
             $_SESSION['create_post_error'] = 'Can\'t update post. Please try again.';
             rollback_exit($connection, $post_id);
         }
@@ -233,11 +239,13 @@
             }
 
         } else {
+            http_response_code(404);
             $_SESSION['update_post_error'] = 'Invalid Featured Post. Unexpected Error.';
             rollback_exit($connection, $post_id);
         }
 
         $connection->close();
+        http_response_code(200);
         header('location:'.DOMAIN_NAME.'pages/views/dashboard/manage_posts.php');
     }
     else $abort_dashboard_op($abort_redirect);
