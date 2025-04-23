@@ -32,14 +32,14 @@
 
             $name = $row['firstname'][0].' '.$row['lastname'][0];
             if($connection->errno) {
-                $abort_dashboard_op($abort_redirect,true,'Can\'t delete \''.$name.'\'. Contact Administrator if possible.');
+                $abort_dashboard_op($abort_redirect,$connection,'Can\'t delete \''.$name.'\'. Contact Administrator if possible.');
             } else {
                 
                 header('location:'.DOMAIN_NAME.'pages/views/dashboard/manage_users.php');
                 $_SESSION['dashboard_success_msg'] = "User $name has been deleted!";
             }
 
-        } else $abort_dashboard_op($abort_redirect,true);
+        } else $abort_dashboard_op($abort_redirect,$connection);
         $connection->close();
     } else $abort_dashboard_op($abort_redirect);
 ?>

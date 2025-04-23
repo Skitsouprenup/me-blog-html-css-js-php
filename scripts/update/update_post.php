@@ -23,6 +23,16 @@
         exit();
     }
 
+    function write_featured_post_msg($connection, $title) {
+        if($connection->errno) {
+            $_SESSION['dashboard_abort_msg'] = "Can't update featured blog.";
+        } else {
+            if(isset($_SESSION['dashboard_success_msg']))
+                $_SESSION['dashboard_success_msg'] .= "<br />Post '".trim_text($title)."' 'featured' status is removed!";
+            else $_SESSION['dashboard_success_msg'] = "Post '".trim_text($title)."' 'featured' status is removed!";
+        }
+    }
+
     function unset_featured_post($connection, $title) {
         //featured_post table must only have one record and the id of that
         //is '1'.
@@ -31,13 +41,7 @@
         "post_id=NULL WHERE id=1";
         $connection->query($update_featured_post);
 
-        if($connection->errno) {
-            $_SESSION['dashboard_abort_msg'] = "Can't update featured blog.";
-        } else {
-            if(isset($_SESSION['dashboard_success_msg']))
-                $_SESSION['dashboard_success_msg'] .= "<br />Post '".trim_text($title)."' 'featured' status is removed!";
-            else $_SESSION['dashboard_success_msg'] = "Post '".trim_text($title)."' 'featured' status is removed!";
-        }
+        write_featured_post_msg($connection, $title);
     }
 
     function update_featured_post(&$post_info, $connection, $post_id, $title) {
@@ -48,13 +52,7 @@
         "post_id=$post_id WHERE id=1";
         $connection->query($update_featured_post);
 
-        if($connection->errno) {
-            $_SESSION['dashboard_abort_msg'] = "Can't update featured blog.";
-        } else {
-            if(isset($_SESSION['dashboard_success_msg']))
-                $_SESSION['dashboard_success_msg'] .= "<br />Post '".trim_text($title)."' is now a featured blog!";
-            else $_SESSION['dashboard_success_msg'] = "Post '".trim_text($title)."' is now a featured blog!";
-        }
+        write_featured_post_msg($connection, $title);
     }
 
     if(isset($_POST['submit']) && isset($_GET['id'])) {
@@ -72,8 +70,8 @@
             Verify if the user that want to update the post is the owner of the post 
             or the user is an admin.
         */
-        $fetch_author = "SELECT author_id, thumbnail FROM posts WHERE id=$post_id LIMIT 1";
-        $result = $connection->query($fetch_author);
+        $fetch_post_info = "SELECT author_id, thumbnail FROM posts WHERE id=$post_id LIMIT 1";
+        $result = $connection->query($fetch_post_info);
 
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
@@ -114,9 +112,14 @@
 
         //Check if category of this submitted post exists.
         $category_id = -1;
+        # Remove &nbsp; This &nbsp; comes from select html field because
+        # I put &nbsp; to longest category name in select in order for
+        # the select item to not overlap the custom red arrow that I put
+        # in the select.
+        $category_no_nbsp = str_replace("&nbsp;","",$post_info['category'][0]);
         $fetch_category = 
             "SELECT id from categories ".
-            "WHERE title='".$post_info['category'][0]."' ";
+            "WHERE title='".$category_no_nbsp."' ";
         $result = $connection->query($fetch_category);
 
         if ($result->num_rows > 0) {

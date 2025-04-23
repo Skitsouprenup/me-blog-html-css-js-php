@@ -19,6 +19,7 @@
                     str_replace('/',$this->ds,"/scripts/delete/logout.php")
                 ],
                 'login_required' => [
+                    str_replace('/',$this->ds,"/scripts/delete/delete_post.php"),
                     str_replace('/',$this->ds,"/scripts/update/update_post.php"),
                     str_replace('/',$this->ds,"/scripts/create/create_post.php"),
                 ],

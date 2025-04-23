@@ -52,9 +52,14 @@
 
         //Check if category of this submitted post exists.
         $category_id = -1;
+        # Remove &nbsp; This &nbsp; comes from select html field because
+        # I put &nbsp; to longest category name in select in order for
+        # the select item to not overlap the custom red arrow that I put
+        # in the select.
+        $category_no_nbsp = str_replace("&nbsp;","",$post_info['category'][0]);
         $fetch_category = 
             "SELECT id from categories ".
-            "WHERE title='".$credentials['category'][0]."' ";
+            "WHERE title='".$category_no_nbsp."' ";
         $result = $connection->query($fetch_category);
 
         if ($result->num_rows > 0) {
