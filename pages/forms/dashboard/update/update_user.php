@@ -66,9 +66,19 @@
                         name="lastname" placeholder="Last Name..."
                     />
                     <label for="role">Role</label>
-                    <select name="role" value="<?php echo $user_info['role'] ?? ''?>">
-                        <option value="admin">Admin</option>
-                        <option value="author">Author</option>
+                    <select name="role">
+                        <option 
+                            value="author"
+                            <?php echo $user_info['role'] === 'author' ? 'selected' : ''?>
+                        >
+                            Author
+                        </option>
+                        <option 
+                            value="admin"
+                            <?php echo $user_info['role'] === 'admin' ? 'selected' : ''?>
+                        >
+                        Admin
+                        </option>
                     </select>
                     <?php if(isset($error_msg)):?>
                         <div class="failed_msg">

@@ -14,19 +14,19 @@
         unset($_SESSION['update_category_error']);
     }
 
-    $user_info = NULL;
+    $category_info = NULL;
     $update_page = DOMAIN_NAME.'scripts/update/update_category.php';
     $abort_redirect = DOMAIN_NAME.'pages/views/dashboard/manage_category.php';
 
     #$rollback is in credentials.php
     #Get previous form value from previous session
     if(isset($rollback)) {
-        $GLOBALS['user_info'] = $rollback;
+        $GLOBALS['category_info'] = $rollback;
         unset($rollback);
     }
 
     //Get info from database if there's no previous form value
-    if(isset($_GET['title']) && !isset($user_info)) {
+    if(isset($_GET['title']) && !isset($category_info)) {
         require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/db_constants.php";
 
         $title = filter_var($_GET['title'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -34,7 +34,7 @@
         $result = $connection->query($fetch_users);
 
         if ($result->num_rows > 0) {
-            $GLOBALS['user_info'] = $result->fetch_assoc();
+            $GLOBALS['category_info'] = $result->fetch_assoc();
         } else $abort_dashboard_op($abort_redirect);
 
         $connection->close();
@@ -62,12 +62,12 @@
                 >
                     <input 
                         type="text" name="title" 
-                        placeholder="Title..." value="<?php echo $user_info['title'] ?? ''?>"
+                        placeholder="Title..." value="<?php echo $category_info['title'] ?? ''?>"
                     />
                     <textarea 
                         rows=4 name="description" 
                         placeholder="Description..."
-                    ><?php echo $user_info['description'] ?? ''?></textarea>
+                    ><?php echo $category_info['description'] ?? ''?></textarea>
                     <?php if(isset($error_msg)):?>
                         <div class="failed_msg">
                             <p><?php echo $error_msg?></p>

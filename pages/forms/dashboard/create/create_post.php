@@ -1,7 +1,7 @@
 <?php
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/constants.php";
-    require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/dashboard_constants.php";
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/scripts/utils/credentials.php";
+    require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/scripts/utils/dashboard_post_utils.php";
 
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/page_access.php";
     pageAccessControl(__FILE__);
@@ -21,37 +21,8 @@
 
     $categories = [];
     while($categories[] = $result->fetch_assoc());
+    get_longest_category_name($categories);
 
-    $orig = NULL;
-    if(count($categories) > 0) {
-        /* 
-            Check if the last element is null because fetch_assoc() always
-            put null at the end of array.
-        */
-        $end = end($categories);
-        if(!isset($end)) array_pop($categories);
-
-        /* Find longest category name */
-        $index = 0;
-        # [0] = index, [1] = name-length
-        # [2] = name
-        $ln = [-1, 0, ''];
-        foreach($categories as $key => $list) {
-
-            $str_len = strlen($list['title']);
-            if($ln[1] < $str_len) {
-                $ln[0] = $index;
-                $ln[1] = $str_len;
-                $ln[2] = $list['title'];
-            }
-            $index++;
-        }
-        $orig = $ln;
-        //Add extra right space so that the red arrow in
-        //select won't overlap the <select> content.
-        $categories[$ln[0]]['title'] .= '&nbsp;&nbsp;&nbsp;&nbsp;';
-        /* */
-    }
     $connection->close();
 
 ?>
@@ -75,8 +46,9 @@
                         type="text" name="title" placeholder="Title..."
                         <?php echo 'value="'.fillInPreviousData('title').'"' ?>
                     />
-                    <textarea rows=4 name="description" 
-                        placeholder="Description..."><?php echo fillInPreviousData('description')?></textarea>
+                    <textarea rows=8 name="description" 
+                        placeholder="Description..."
+                    ><?php echo fillInPreviousData('description')?></textarea>
 
                     <div class="create_post_inputs">
                         <div class="post_category">
@@ -98,7 +70,7 @@
                             <input type="file" name="thumb" id="thumb" />
                         </div>
 
-                        <?php if(UserRoles::Admin === UserRoles::from($user_session['role'])):?>
+                        <?php if(UserRoles::Admin === UserRoles::from($_SESSION['user_session']['role'])):?>
                             <div class="featured">
                                 <div>
                                     <input type="checkbox" id="featured_cbox" name="featured_cbox"/>

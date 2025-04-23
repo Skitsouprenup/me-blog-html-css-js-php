@@ -5,8 +5,34 @@
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/page_access.php";
     pageAccessControl(__FILE__);
 
+    require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/db_constants.php";
+
     $select_sidebar_item_query = '.dashboard_side_bar > a > #manage_posts_sidebar_item';
     $dialog_box_delete_btn = '.dashboard_dialog_box > .interface > .delete_post';
+
+    $update_post_page = DOMAIN_NAME.'pages/forms/dashboard/update/update_post.php?id=';
+    $delete_post_script = DOMAIN_NAME."scripts/delete/delete_post.php?id=";
+
+    $fetch_user_posts = 
+    "SELECT posts.title as post_title, posts.id as post_id, ".
+    "categories.title as category_title FROM posts ".
+    "INNER JOIN categories ON posts.category_id = categories.id ".
+    "WHERE posts.author_id={$_SESSION['user_session']['id']} ".
+    "ORDER BY posts.id DESC";
+    $result = $connection->query($fetch_user_posts);
+
+    $posts = [];
+    while($posts[] = $result->fetch_assoc());
+    
+    if(count($posts) > 0) {
+        /* 
+            Check if the last element is null because fetch_assoc() always
+            put null at the end of array.
+        */
+        $end = end($posts);
+        if(!isset($end)) array_pop($posts);
+    }
+    $connection->close();
 
     $operation = 'post';
     $dialog_box_title = 'Delete Post';
@@ -39,27 +65,33 @@
                         <h2>Manage Posts</h2>
                         <div class="data_list_content">
                             <div class="data_view_small_screen">
-                                <div class="data_container">
-                                    <div class="data">
-                                        <h3>Title</h3>
-                                        <p>Title II</p>
-                                    </div>
-                                    <div class="data">
-                                        <h3>Category</h3>
-                                        <p>Category II</p>
-                                    </div>
-                                    <div class="actions">
-                                        <h3>Actions</h3>
-                                        <div class="dashboard_actions_mobile">
-                                            <a href="#" class="edit">
-                                                <div>Edit</div>
-                                            </a>
-                                            <a href="#" class="delete">
-                                                <div>Delete</div>
-                                            </a>
+                                <?php foreach($posts as $list):?>
+                                    <div class="data_container">
+                                        <div class="data">
+                                            <h3>Title</h3>
+                                            <p><?php echo $list['post_title']?></p>
+                                        </div>
+                                        <div class="data">
+                                            <h3>Category</h3>
+                                            <p><?php echo $list['category_title']?></p>
+                                        </div>
+                                        <div class="actions">
+                                            <h3>Actions</h3>
+                                            <div class="dashboard_actions_mobile">
+                                                <a 
+                                                    href=<?php echo $update_post_page.$list['title']?> 
+                                                    class="edit"
+                                                >
+                                                    <div>Edit</div>
+                                                </a>
+                                                <a href="#" class="delete">
+                                                    <div>Delete</div>
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                <?php endforeach?>
+                                
                             </div>
                             <table class="data_view_large_screen">
                                 <tr>
@@ -67,22 +99,33 @@
                                     <th>Category</th>
                                     <th>Actions</th>
                                 </tr>
-                                <tr>
-                                    <td>Title II</td>
-                                    <td>Category II</td>
-                                    <td>
-                                        <div class="dashboard_actions">
-                                            <a href="#" class="edit">
-                                                <div>Edit</div>
-                                            </a>
-                                            <button type="button" class="delete">
-                                                Delete
-                                            </button>
-                                        </div>
-                                    </td>
-                                    
-                                </tr>
-                                
+                                <?php foreach($posts as $list):?>
+                                    <tr>
+                                        <td><?php echo $list['post_title']?></td>
+                                        <td><?php echo $list['category_title']?></td>
+                                        <td>
+                                            <div class="dashboard_actions">
+                                                <a 
+                                                    href=<?php echo $update_post_page.$list['post_id']?> 
+                                                    class="edit"
+                                                >
+                                                    <div>Edit</div>
+                                                </a>
+                                                <button type="button" class="delete"
+                                                    <?php 
+                                                        echo "onclick=\"showDeleteDialogBox(".
+                                                        "'".$list['post_title']."',".
+                                                        "'".$delete_post_script.$list['post_id']."',".
+                                                        "'".$dialog_box_delete_btn."')\""
+                                                    ?>
+                                                >
+                                                    Delete
+                                                </button>
+                                            </div>
+                                        </td>
+                                        
+                                    </tr>
+                                <?php endforeach?>
                             </table>
                         </div>
                     </div>

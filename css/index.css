@@ -711,6 +711,7 @@ select {
 
 .dashboard_container > .success_msg > button,
 .dashboard_container > .failed_msg > button {
+    cursor: pointer;
     background-color: transparent;
 }
 
@@ -802,7 +803,7 @@ select {
 
 .data_view_large_screen th {
     font-size: 1.3rem;
-    background-color: rgba(255, 235, 205, 0.3);
+    background-color: darkslateblue;
 }
 
 .data_view_large_screen td {
@@ -812,7 +813,7 @@ select {
 
 /* n starts at 0 */
 .data_view_large_screen tr:nth-child(odd):not(:first-child) {
-    background-color: rgba(128, 128, 128, 0.4);
+    background-color: hsla(248, 39%, 65%, 0.4);
 }
 
 .data_view_large_screen .dashboard_actions {
