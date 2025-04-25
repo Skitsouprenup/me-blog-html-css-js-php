@@ -23,13 +23,20 @@
         exit();
     }
 
-    function write_featured_post_msg($connection, $title) {
+    function write_featured_post_msg($connection, $title, $remove) {
         if($connection->errno) {
             $_SESSION['dashboard_abort_msg'] = "Can't update featured blog.";
         } else {
+            $success_msg = NULL;
+
+            if($remove) 
+                $success_msg = "Post '".trim_text($title)."' 'featured' status is removed!";
+            else
+                $success_msg = "Post '".trim_text($title)."' is now a featured blog!";
+
             if(isset($_SESSION['dashboard_success_msg']))
-                $_SESSION['dashboard_success_msg'] .= "<br />Post '".trim_text($title)."' 'featured' status is removed!";
-            else $_SESSION['dashboard_success_msg'] = "Post '".trim_text($title)."' 'featured' status is removed!";
+                $_SESSION['dashboard_success_msg'] .= "<br />".$success_msg;
+            else $_SESSION['dashboard_success_msg'] = $success_msg;
         }
     }
 
@@ -41,18 +48,17 @@
         "post_id=NULL WHERE id=1";
         $connection->query($update_featured_post);
 
-        write_featured_post_msg($connection, $title);
+        write_featured_post_msg($connection, $title, true);
     }
 
     function update_featured_post(&$post_info, $connection, $post_id, $title) {
         //featured_post table must only have one record and the id of that
         //is '1'.
         $update_featured_post = "UPDATE featured_post SET ".
-        "post_title='{$post_info['title'][0]}', ".
         "post_id=$post_id WHERE id=1";
         $connection->query($update_featured_post);
 
-        write_featured_post_msg($connection, $title);
+        write_featured_post_msg($connection, $title, false);
     }
 
     if(isset($_POST['submit']) && isset($_GET['id'])) {
@@ -133,7 +139,6 @@
             rollback_exit($connection, $post_id);
         }
 
-
         $thumb_dest_client = NULL;
         if(isset($thumb['name']) && !empty($thumb['name'])) {
             //Upload thumbnail to server.
@@ -212,7 +217,7 @@
         }
         //--//
 
-        $fetch_featured_post = "SELECT post_id from featured_post WHERE id=1";
+        $fetch_featured_post = "SELECT post_id FROM featured_post WHERE id=1";
         $result = $connection->query($fetch_featured_post);
 
         if ($result->num_rows > 0) {

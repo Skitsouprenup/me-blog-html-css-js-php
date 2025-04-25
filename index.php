@@ -1,5 +1,14 @@
 <?php
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/constants.php";
+    require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/db_constants.php";
+    require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/scripts/read/get_posts.php";
+
+    require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/page_access.php";
+    pageAccessControl(__FILE__);
+
+    $featured_post = get_featured_post($connection);
+
+    $posts = get_posts($connection, $featured_post);
 ?>
 
 <!DOCTYPE html>
@@ -19,148 +28,84 @@
         <!-- Featured Blog -->
             <section class="featured_blog__container">
                 <h1>Featured Blog</h1>
-                <article class="featured_blog">
-                    <div class="blog__image">
-                        <img src="./images/developer-wallpaper1.png" />
-                    </div>
+                <?php if(isset($featured_post)):?>
+                    <article class="featured_blog">
+                        <div class="blog__image">
+                            <img src="<?php echo $featured_post['thumbnail']?>" />
+                        </div>
 
-                    <div class="blog__info">
-                        <div class="blog__info_content">
-                            <h3 class="blog__title">Title Here</h3>
-                            <div class="blog__categories">
-                                <div class="blog__categories_item">
-                                    <p>Technology</p>
+                        <div class="blog__info">
+                            <div class="blog__info_content">
+                                <div class="blog__header">
+                                    <h3 class="blog__title"><?php echo $featured_post['title']?></h3>
+                                    <div class="blog__categories">
+                                    <a class="blog__categories_item" href="<?php echo DOMAIN_NAME."pages/views/category_list.php?id={$featured_post['category_id']}"?>">
+                                        <p><?php echo $featured_post['category']?></p>
+                                    </a>
+                                    </div>
+                                </div>
+                                <p><?php echo trim_text($featured_post['content'], 500, 450)?></p>
+                            </div>
+
+                            <div class="blog__info_meta">
+                                <img src="<?php echo $featured_post['avatar']?>" />
+                                <div class="blog__info_author_date">
+                                    <p>by <?php echo $featured_post['name']?></p>
+                                    <p><?php echo date("M d, Y - H:i", strtotime($featured_post['time_created']))?></p>
                                 </div>
                             </div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce mattis velit nec ipsum convallis imperdiet. Vestibulum eu magna convallis, rhoncus justo sed, posuere nisi. Ut dignissim libero vitae lorem rhoncus, ut pulvinar turpis consectetur. Sed nec urna eu augue consectetur lacinia eget vel neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla egestas dignissim lorem, laoreet dapibus nisi. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Suspendisse nec vestibulum eros. Phasellus feugiat leo quis bibendum efficitur. Ut iaculis et sem vel posuere. Quisque eros sem, varius a vulputate non, laoreet at arcu. Duis non volutpat enim, quis consectetur tellus. 
-                            </p>
                         </div>
-
-                        <div class="blog__info_meta">
-                            <img src="./images/avatar/52685143.jpg" />
-                            <div class="blog__info_author_date">
-                                <p>By Test</p>
-                                <p>January 01, 1970 - 00:00</p>
-                            </div>
-                        </div>
+                    </article>
+                <?php else:?>
+                    <div class="no_posts">
+                        <h2>No Featured Blog</h2>
                     </div>
-                </article>
+                <?php endif?>
             </section>
 
         <!-- Blog List -->
             <section class="blog_list__container">
                 <h1>Blogs</h1>
-                <div class="blog_list">
+                    <div class="blog_list">
 
-                    <div class="blog-item">
-                        <div class="blog_list__image">
-                            <img src="./images/developer-wallpaper1.png" />
-                        </div>
+                        <?php if(isset($posts)):?>
+                            <?php foreach($posts as $list):?>
 
-                        <div class="blog__info">
-                            <div class="blog__info_content">
-                                <h3 class="blog__title">Title Here</h3>
-                                <div class="blog__categories">
-                                    <div class="blog__categories_item">
-                                        <p>Technology</p>
+                                <div class="blog-item">
+                                    <div class="blog_list__image">
+                                        <img src=<?php echo $list['thumbnail']?> />
+                                    </div>
+
+                                    <div class="blog__info">
+                                        <div class="blog__info_content">
+                                            <div class="blog__header">
+                                                <h3 class="blog__title"><?php echo $list['post_title']?></h3>
+                                                <div class="blog__categories">
+                                                    <a class="blog__categories_item" href="<?php echo DOMAIN_NAME."pages/views/category_list.php?id={$list['category_id']}"?>">
+                                                        <p><?php echo $list['cat_title']?></p>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <?php echo trim_text($featured_post['content'], 500, 450)?>
+                                        </div>
+
+                                        <div class="blog__info_meta">
+                                            <img src=<?php echo $list['avatar']?> />
+                                            <div class="blog__info_author_date">
+                                                <p>By <?php echo $list['firstname'].' '.$list['lastname']?></p>
+                                                <p><?php echo date("M d, Y - H:i", strtotime($featured_post['time_created']))?></p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce mattis velit nec ipsum convallis imperdiet. Vestibulum eu magna convallis, rhoncus justo sed, posuere nisi. Ut dignissim libero vitae lorem rhoncus, ut pulvinar turpis consectetur. Sed nec urna eu augue consectetur lacinia eget vel neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla egestas dignissim lorem, laoreet dapibus nisi. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Suspendisse nec vestibulum eros. Phasellus feugiat leo quis bibendum efficitur. Ut iaculis et sem vel posuere. Quisque eros sem, varius a vulputate non, laoreet at arcu. Duis non volutpat enim, quis consectetur tellus. 
-                                </p>
-                            </div>
-
-                            <div class="blog__info_meta">
-                                <img src="./images/avatar/52685143.jpg" />
-                                <div class="blog__info_author_date">
-                                    <p>By Test</p>
-                                    <p>January 01, 1970 - 00:00</p>
-                                </div>
-                            </div>
-                        </div>
+                            <?php endforeach?>
+                        <?php endif?>
                     </div>
-
-                    <div class="blog-item">
-                        <div class="blog_list__image">
-                            <img src="./images/developer-wallpaper1.png" />
-                        </div>
-
-                        <div class="blog__info">
-                            <div class="blog__info_content">
-                                <h3 class="blog__title">Title Here</h3>
-                                <div class="blog__categories">
-                                    <div class="blog__categories_item">
-                                        <p>Technology</p>
-                                    </div>
-                                </div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce mattis velit nec ipsum convallis imperdiet. Vestibulum eu magna convallis, rhoncus justo sed, posuere nisi. Ut dignissim libero vitae lorem rhoncus, ut pulvinar turpis consectetur. Sed nec urna eu augue consectetur lacinia eget vel neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla egestas dignissim lorem, laoreet dapibus nisi. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Suspendisse nec vestibulum eros. Phasellus feugiat leo quis bibendum efficitur. Ut iaculis et sem vel posuere. Quisque eros sem, varius a vulputate non, laoreet at arcu. Duis non volutpat enim, quis consectetur tellus. 
-                                </p>
-                            </div>
-
-                            <div class="blog__info_meta">
-                                <img src="./images/avatar/52685143.jpg" />
-                                <div class="blog__info_author_date">
-                                    <p>By Test</p>
-                                    <p>January 01, 1970 - 00:00</p>
-                                </div>
-                            </div>
-                        </div>
+                <?php if(!isset($posts)):?>
+                    <div class="no_posts">
+                        <h2>No Featured Blog</h2>
                     </div>
-
-                    <div class="blog-item">
-                        <div class="blog_list__image">
-                            <img src="./images/developer-wallpaper1.png" />
-                        </div>
-
-                        <div class="blog__info">
-                            <div class="blog__info_content">
-                                <h3 class="blog__title">Title Here</h3>
-                                <div class="blog__categories">
-                                    <div class="blog__categories_item">
-                                        <p>Technology</p>
-                                    </div>
-                                </div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce mattis velit nec ipsum convallis imperdiet. Vestibulum eu magna convallis, rhoncus justo sed, posuere nisi. Ut dignissim libero vitae lorem rhoncus, ut pulvinar turpis consectetur. Sed nec urna eu augue consectetur lacinia eget vel neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla egestas dignissim lorem, laoreet dapibus nisi. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Suspendisse nec vestibulum eros. Phasellus feugiat leo quis bibendum efficitur. Ut iaculis et sem vel posuere. Quisque eros sem, varius a vulputate non, laoreet at arcu. Duis non volutpat enim, quis consectetur tellus. 
-                                </p>
-                            </div>
-
-                            <div class="blog__info_meta">
-                                <img src="./images/avatar/52685143.jpg" />
-                                <div class="blog__info_author_date">
-                                    <p>By Test</p>
-                                    <p>January 01, 1970 - 00:00</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="blog-item">
-                        <div class="blog_list__image">
-                            <img src="./images/developer-wallpaper1.png" />
-                        </div>
-
-                        <div class="blog__info">
-                            <div class="blog__info_content">
-                                <h3 class="blog__title">Title Here</h3>
-                                <div class="blog__categories">
-                                    <div class="blog__categories_item">
-                                        <p>Technology</p>
-                                    </div>
-                                </div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce mattis velit nec ipsum convallis imperdiet. Vestibulum eu magna convallis, rhoncus justo sed, posuere nisi. Ut dignissim libero vitae lorem rhoncus, ut pulvinar turpis consectetur. Sed nec urna eu augue consectetur lacinia eget vel neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla egestas dignissim lorem, laoreet dapibus nisi. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Suspendisse nec vestibulum eros. Phasellus feugiat leo quis bibendum efficitur. Ut iaculis et sem vel posuere. Quisque eros sem, varius a vulputate non, laoreet at arcu. Duis non volutpat enim, quis consectetur tellus. 
-                                </p>
-                            </div>
-
-                            <div class="blog__info_meta">
-                                <img src="./images/avatar/52685143.jpg" />
-                                <div class="blog__info_author_date">
-                                    <p>By Test</p>
-                                    <p>January 01, 1970 - 00:00</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
+                <?php endif?>
             </section>
         </div>
 

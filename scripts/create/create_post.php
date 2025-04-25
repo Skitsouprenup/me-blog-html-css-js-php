@@ -57,7 +57,7 @@
         # I put &nbsp; to longest category name in select in order for
         # the select item to not overlap the custom red arrow that I put
         # in the select.
-        $category_no_nbsp = str_replace("&nbsp;","",$post_info['category'][0]);
+        $category_no_nbsp = str_replace("&nbsp;","",$credentials['category'][0]);
         $fetch_category = 
             "SELECT id from categories ".
             "WHERE title='".$category_no_nbsp."' ";
@@ -142,7 +142,6 @@
             //featured_post table must only have one record and the id of that
             //is '1'.
             $update_featured_post = "UPDATE featured_post SET ".
-            "post_title='{$credentials['title'][0]}', ".
             "post_id=$insert_id WHERE id=1";
             $connection->query($update_featured_post);
 
@@ -156,8 +155,9 @@
         }
 
         $connection->close();
-        http_response_code(201);
         header('location:'.DOMAIN_NAME.'pages/views/dashboard/manage_posts.php');
+        //For some reason, this response code below breaks the app
+        //http_response_code(201);
 
     } else $abort_dashboard_op($abort_redirect);
 ?>
