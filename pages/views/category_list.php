@@ -1,12 +1,38 @@
 <?php
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/constants.php";
-
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/page_access.php";
     pageAccessControl(__FILE__);
 
-    $categories = [];
-    if(isset($_GET['id'])) {
+    require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/db_constants.php";
 
+    $uncategorized_desc = "Posts that don't have a proper category";
+
+    $posts = [];
+    $category = [];
+    if(isset($_GET['id'])) {
+        $id = filter_var($_GET['id'], FILTER_SANITIZE_NUMBER_INT);
+        $get_cat_query = "SELECT title,description from categories WHERE id=$id";
+        $result = $connection->query($get_cat_query);
+
+        if($result->num_rows > 0) {
+            $category = $result->fetch_assoc();
+        }
+
+        $get_posts_query = 
+        "SELECT p.id as post_id,p.title,p.content,p.thumbnail,p.time_created,".
+        "usr.firstname,usr.lastname,usr.avatar FROM posts as p ".
+        "INNER JOIN users as usr ON p.author_id=usr.id ".
+        "WHERE p.category_id=$id";
+        $result = $connection->query($get_posts_query);
+
+        if($result->num_rows > 0) {
+            //This while loop removes the NULL value
+            //that is placed by fetch_assoc() as the last
+            //item.
+            while($row = $result->fetch_assoc()) {
+                $posts[] = $row;
+            }
+        }
     }
 ?>
 
@@ -18,42 +44,58 @@
     <!-- navigation menu -->
         <?php include ROOT_PATH.'pages'.$ds.'partials'.$ds.'nav.php'; ?>
 
-        <div class="content_container">
-            <div class="category_title">
-                <p>Category Title</p>
+        <div class="category__content_container">
+            <div class="category_header">
+                <p><?php echo $category['title'] ?? 'Uncategorized'?></p>
+                <p class="category_desc"><?php echo $category['description'] ?? $uncategorized_desc?></p>
             </div>
 
-            <!-- Blog List -->
-            <section class="category_list__container">
-                <div class="blog_list">
+            <?php if(count($posts) > 0):?>
+                <section class="category_list__container">
+                <!-- Blog List -->
+                    <div class="blog_list">
+                    <?php foreach($posts as $list):?>
+                        <div class="blog-item">
+                            <div class="blog_list__image">
+                                <img src="<?php echo $list['thumbnail']?>" />
+                            </div>
 
-                    <div class="blog-item">
-                        <div class="blog_list__image">
-                            <img src="../../images/developer-wallpaper1.png" />
-                        </div>
+                            <div class="blog__info">
+                                <div class="blog__info_content">
+                                    <div class="blog__header">
+                                        <a 
+                                            href=<?php echo DOMAIN_NAME."pages/views/single_post.php?id={$list['post_id']}"?>
+                                            class="blog__title"
+                                        >
+                                            <?php echo $list['title']?>
+                                        </a>
+                                        <div class="blog__categories">
+                                            <div class="blog__categories_item_no_hover">
+                                                <p><?php echo $list['category'] ?? 'Uncategorized'?></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p><?php echo trim_text($list['content'], 500, 450)?></p>
+                                </div>
 
-                        <div class="blog__info">
-                            <div class="blog__info_content">
-                                <h3 class="blog__title">Title Here</h3>
-                                <div class="blog__categories">
-                                    <div class="blog__categories_item">
-                                        <p>Technology</p>
+                                <div class="blog__info_meta">
+                                    <img src="<?php echo $list['avatar']?>" />
+                                    <div class="blog__info_author_date">
+                                        <p>By <?php echo $list['firstname'].' '.$list['lastname']?></p>
+                                        <p><?php echo date("M d, Y - H:i", strtotime($list['time_created']))?></p>
                                     </div>
                                 </div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce mattis velit nec ipsum convallis imperdiet. Vestibulum eu magna convallis, rhoncus justo sed, posuere nisi. Ut dignissim libero vitae lorem rhoncus, ut pulvinar turpis consectetur. Sed nec urna eu augue consectetur lacinia eget vel neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla egestas dignissim lorem, laoreet dapibus nisi. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Suspendisse nec vestibulum eros. Phasellus feugiat leo quis bibendum efficitur. Ut iaculis et sem vel posuere. Quisque eros sem, varius a vulputate non, laoreet at arcu. Duis non volutpat enim, quis consectetur tellus. 
-                                </p>
                             </div>
 
-                        <div class="blog__info_meta">
-                            <img src="../../images/avatar/52685143.jpg" />
-                            <div class="blog__info_author_date">
-                                <p>By Test</p>
-                                <p>January 01, 1970 - 00:00</p>
-                            </div>
                         </div>
+                    <?php endforeach?>
                     </div>
+                </section>
+            <?php else:?>
+                <div class="no_posts_high_vh no_posts_category_list">
+                    <p>No Posts Found</p>
                 </div>
-            </section>
+            <?php endif?>
         </div>
 
     <!-- Footer  -->

@@ -1,10 +1,10 @@
 <?php
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/constants.php";
-    require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/db_constants.php";
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/scripts/read/get_posts.php";
-
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/page_access.php";
     pageAccessControl(__FILE__);
+
+    require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/db_constants.php";
 
     $post = NULL;
     if(isset($_GET['id'])) {
@@ -61,8 +61,8 @@
                     </div>
                 </div>
             <?php else:?>
-                <div>
-                    <p>Can't Find Post.</p>
+                <div class="no_posts_high_vh">
+                    <p>No Posts Found</p>
                 </div>
             <?php endif?>
 

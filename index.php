@@ -101,12 +101,12 @@
                                                     <?php echo $list['post_title']?>
                                                 </a>
                                                 <div class="blog__categories">
-                                                    <a class="blog__categories_item" href="<?php echo DOMAIN_NAME."pages/views/category_list.php?id={$list['id']}"?>">
+                                                    <a class="blog__categories_item" href="<?php echo DOMAIN_NAME."pages/views/category_list.php?id={$list['category_id']}"?>">
                                                         <p><?php echo $list['cat_title'] ?? 'Uncategorized'?></p>
                                                     </a>
                                                 </div>
                                             </div>
-                                            <?php echo trim_text($list['content'], 500, 450)?>
+                                            <p><?php echo trim_text($list['content'], 500, 450)?></p>
                                         </div>
 
                                         <div class="blog__info_meta">
@@ -123,7 +123,7 @@
                     </div>
                 <?php if(!isset($posts)):?>
                     <div class="no_posts">
-                        <h2>No Featured Blog</h2>
+                        <h2>No Posts Found</h2>
                     </div>
                 <?php endif?>
             </section>
