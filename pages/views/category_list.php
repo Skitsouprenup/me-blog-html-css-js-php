@@ -3,6 +3,11 @@
 
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/page_access.php";
     pageAccessControl(__FILE__);
+
+    $categories = [];
+    if(isset($_GET['id'])) {
+
+    }
 ?>
 
 <!DOCTYPE html>

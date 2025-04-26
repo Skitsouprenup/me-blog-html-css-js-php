@@ -32,7 +32,7 @@
             joins have different ways of filling up the resultset.
         */
         $get_posts = 
-            "SELECT p.title as post_title,p.content,p.thumbnail,p.time_created,p.category_id,".
+            "SELECT p.id,p.title as post_title,p.content,p.thumbnail,p.time_created,p.category_id,".
             "cat.title as cat_title,usr.firstname,usr.lastname,usr.avatar FROM posts as p ".
             "INNER JOIN categories as cat ON cat.id=p.category_id ".
             "INNER JOIN users as usr ON usr.id=p.author_id";
@@ -90,5 +90,34 @@
             } else return NULL;
         }
         /* ### */
+    }
+
+    function get_single_post($connection, $id) {
+        $get_post_query = "SELECT id,title as post_title,content,thumbnail,".
+        "time_created,category_id,author_id FROM posts WHERE id=$id";
+        $result = $connection->query($get_post_query);
+        $post = [];
+
+        if($result->num_rows > 0) {
+            $post = $result->fetch_assoc();
+                
+            //Get category and user
+            $fetch_post_cat_user = 
+                "SELECT cat.title as cat_title,usr.firstname,usr.lastname,usr.avatar ".
+                "FROM (SELECT title FROM categories WHERE id=".$post['category_id'].") as cat,".
+                "(SELECT firstname,lastname,avatar FROM users WHERE id=".$post['author_id'].") as usr";
+            $fetch_data = $connection->query($fetch_post_cat_user);
+
+            if($fetch_data->num_rows > 0) {
+                $cat_user = $fetch_data->fetch_assoc();
+
+                $post['category'] = $cat_user['cat_title'];
+                $post['name'] = $cat_user['firstname'].' '.$cat_user['lastname'];
+                $post['avatar'] = $cat_user['avatar'];
+            }
+
+            return $post;
+        }
+        return NULL;
     }
 ?>

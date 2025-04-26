@@ -67,6 +67,6 @@
             rollback_exit($connection);
         }
 
-
+        $connection->close();
     } else $abort_dashboard_op($abort_redirect);
 ?>
