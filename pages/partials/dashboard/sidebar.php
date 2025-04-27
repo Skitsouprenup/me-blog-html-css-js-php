@@ -37,7 +37,6 @@
         </a>
     <?php endif?>
 
-    <?php if(UserRoles::Admin === UserRoles::from($user_session['role'])):?>
     <a href=<?php echo DOMAIN_NAME.'pages/forms/dashboard/create/create_post.php'?>>
         <div class="icon_link" id="add_post_sidebar_item">
             <div class="icon_link_wrapper">
@@ -50,7 +49,6 @@
             </div>
         </div>
     </a>
-    <?php endif?>
 
     <?php if(UserRoles::Admin === UserRoles::from($user_session['role'])):?>
         <a href=<?php echo DOMAIN_NAME.'pages/forms/dashboard/create/create_category.php'?>>

@@ -60,46 +60,49 @@
                     <div class="dashboard_content">
                         <h2>Manage Users</h2>
                         <div class="data_list_content">
-                            <div class="data_view_small_screen">
-                                <div class="data_container">
-                                    <?php foreach($usernames as $list):?>
-                                        <div class="data">
-                                            <h3>Name</h3>
-                                            <p><?php echo $list['firstname'].' '.$list['lastname']?></p>
-                                        </div>
-                                        <div class="data">
-                                            <h3>Username</h3>
-                                            <p><?php echo $list['username']?></p>
-                                        </div>
-                                        <div class="data">
-                                            <h3>Role</h3>
-                                            <p><?php echo $list['role']?></p>
-                                        </div>
-                                        <div class="actions">
-                                            <h3>Actions</h3>
-                                            <div class="dashboard_actions_mobile">
-                                                <a 
-                                                    href=<?php echo $update_user_page.'?username='.$list['username']?>
-                                                    class="edit"
-                                                >
-                                                    <div>Edit</div>
-                                                </a>
-                                                <button type="button" class="delete"
-                                                    <?php 
-                                                        echo "onclick=\"showDeleteDialogBox(".
-                                                        "'".$list['username']."',".
-                                                        "'".$delete_user_script.$list['username']."',".
-                                                        "'".$dialog_box_delete_btn."')\""
-                                                    ?>
-                                                >
-                                                    Delete
-                                                </button>
+                            <?php if(count($usernames) > 0):?>
+                                <div class="data_view_small_screen">
+                                    <div class="data_container">
+                                        <?php foreach($usernames as $list):?>
+                                            <div class="data">
+                                                <h3>Name</h3>
+                                                <p><?php echo $list['firstname'].' '.$list['lastname']?></p>
                                             </div>
-                                        </div>
-                                    <?php endforeach?>
-                                    
+                                            <div class="data">
+                                                <h3>Username</h3>
+                                                <p><?php echo $list['username']?></p>
+                                            </div>
+                                            <div class="data">
+                                                <h3>Role</h3>
+                                                <p><?php echo $list['role']?></p>
+                                            </div>
+                                            <div class="actions">
+                                                <h3>Actions</h3>
+                                                <div class="dashboard_actions_mobile">
+                                                    <a 
+                                                        href=<?php echo $update_user_page.'?username='.$list['username']?>
+                                                        class="edit"
+                                                    >
+                                                        <div>Edit</div>
+                                                    </a>
+                                                    <button type="button" class="delete"
+                                                        <?php 
+                                                            echo "onclick=\"showDeleteDialogBox(".
+                                                            "'".$list['username']."',".
+                                                            "'".$delete_user_script.$list['username']."',".
+                                                            "'".$dialog_box_delete_btn."')\""
+                                                        ?>
+                                                    >
+                                                        Delete
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        <?php endforeach?>
+                                        
+                                    </div>
                                 </div>
-                            </div>
+                            <?php endif?>
+                            
                             <table class="data_view_large_screen">
                                 <tr>
                                     <th>Name</th>
@@ -136,6 +139,9 @@
                                     </tr>
                                 <?php endforeach?>
                             </table>
+                            <?php if(count($usernames) === 0):?>
+                                <div class="no_posts">No Users Found</div>
+                            <?php endif?>
                         </div>
                     </div>
                 </div>

@@ -809,6 +809,7 @@ select {
     display: flex;
     width: 95%;
     justify-content: center;
+    height: 100%;
 }
 
 .dashboard_container > .success_msg {
@@ -846,7 +847,7 @@ select {
     background-color: transparent;
 }
 
-.dashboard_container > .success_msg > button:hover > svg{
+.dashboard_container > .success_msg > button:hover > svg {
     fill: red;
 }
 
@@ -854,8 +855,18 @@ select {
     fill: yellowgreen;
 }
 
+.data_list_content > .no_posts {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    font-size: 1.75rem;
+    align-items: center;
+    text-align: center;
+}
+
 .dashboard_side_bar {
     z-index: 10;
+    min-width: 175px;
     min-height: 400px;
     background-color: rgb(98, 19, 172);
     display: flex;
@@ -891,12 +902,17 @@ select {
 
 .dashboard_wrapper > .dashboard_content {
     flex: 1;
+    display: flex;
+    flex-direction: column;
     margin: 0 0.5rem;
     padding: 0 0.25rem;
 }
 
 .dashboard_wrapper > .dashboard_content > .data_list_content {
-    overflow-x: auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
 }
 
 .data_view_small_screen {
@@ -904,6 +920,7 @@ select {
     flex-direction: column;
     margin: 1rem 0;
     display: none;
+    flex: 1;
 }
 
 .data_view_small_screen > .data_container h3 {

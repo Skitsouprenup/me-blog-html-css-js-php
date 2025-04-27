@@ -35,7 +35,7 @@
 
             <?php include '.'.$ds.'pages'.$ds.'partials'.$ds.'search.php'; ?>
 
-        <!-- Featured Blog -->
+         <!-- Featured Blog -->
             <section class="featured_blog__container">
                 <h1>Featured Blog</h1>
                 <?php if(isset($featured_post)):?>
@@ -78,7 +78,7 @@
                 <?php endif?>
             </section>
 
-        <!-- Blog List -->
+         <!-- Blog List -->
             <section class="blog_list__container">
                 <h1>Blogs</h1>
                     <div class="blog_list">
@@ -127,6 +127,8 @@
                     </div>
                 <?php endif?>
             </section>
+
+            <!-- Pagination -->
         </div>
 
 <!-- Category List -->

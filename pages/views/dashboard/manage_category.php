@@ -58,37 +58,40 @@
                     <div class="dashboard_content">
                         <h2>Manage Categories</h2>
                         <div class="data_list_content">
-                            <div class="data_view_small_screen">
-                                <?php foreach($categories as $list):?>
-                                    <div class="data_container">
-                                        <div class="data">
-                                            <h3>Name</h3>
-                                            <p><?php echo $list['title']?></p>
-                                        </div>
-                                        <div class="actions">
-                                            <h3>Actions</h3>
-                                            <div class="dashboard_actions_mobile">
-                                                <a 
-                                                    href=<?php echo $update_category_page.'?title='.$list['title']?> 
-                                                    class="edit"
-                                                >
-                                                    <div>Edit</div>
-                                                </a>
-                                                <button type="button" class="delete"
-                                                    <?php 
-                                                        echo "onclick=\"showDeleteDialogBox(".
-                                                        "'".$list['title']."',".
-                                                        "'".$delete_category_script.$list['title']."',".
-                                                        "'".$dialog_box_delete_btn."')\""
-                                                    ?>
-                                                >
-                                                    Delete
-                                                </button>
+                            <?php if(count($categories) > 0):?>
+                                <div class="data_view_small_screen">
+                                    <?php foreach($categories as $list):?>
+                                        <div class="data_container">
+                                            <div class="data">
+                                                <h3>Name</h3>
+                                                <p><?php echo $list['title']?></p>
+                                            </div>
+                                            <div class="actions">
+                                                <h3>Actions</h3>
+                                                <div class="dashboard_actions_mobile">
+                                                    <a 
+                                                        href=<?php echo $update_category_page.'?title='.$list['title']?> 
+                                                        class="edit"
+                                                    >
+                                                        <div>Edit</div>
+                                                    </a>
+                                                    <button type="button" class="delete"
+                                                        <?php 
+                                                            echo "onclick=\"showDeleteDialogBox(".
+                                                            "'".$list['title']."',".
+                                                            "'".$delete_category_script.$list['title']."',".
+                                                            "'".$dialog_box_delete_btn."')\""
+                                                        ?>
+                                                    >
+                                                        Delete
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                <?php endforeach?>  
-                            </div>
+                                    <?php endforeach?>  
+                                </div>
+                            <?php endif?>
+                            
                             <table class="data_view_large_screen">
                                 <tr>
                                     <th>Name</th>
@@ -120,6 +123,10 @@
                                     </tr>
                                 <?php endforeach?>
                             </table>
+
+                            <?php if(count($categories) === 0):?>
+                                <div class="no_posts">No Categories Found</div>
+                            <?php endif?>
                         </div>
                     </div>
                 </div>

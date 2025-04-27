@@ -29,14 +29,13 @@
                 'login_required' => [
                     str_replace('/',$this->ds,"/pages/views/dashboard/manage_posts.php"),
                     str_replace('/',$this->ds,"/pages/forms/dashboard/create/create_post.php"),
-                    str_replace('/',$this->ds,"/pages/forms/dashboard/create/update_post.php")
+                    str_replace('/',$this->ds,"/pages/forms/dashboard/update/update_post.php"),
                 ],
                 'admin_login_required' => [
                     str_replace('/',$this->ds,"/pages/views/dashboard/manage_category.php"),
                     str_replace('/',$this->ds,"/pages/views/dashboard/manage_users.php"),
                     str_replace('/',$this->ds,"/pages/forms/dashboard/create/create_category.php"),
                     str_replace('/',$this->ds,"/pages/forms/dashboard/update/update_category.php"),
-                    str_replace('/',$this->ds,"/pages/forms/dashboard/update/update_post.php"),
                     str_replace('/',$this->ds,"/pages/forms/dashboard/update/update_user.php")
                 ]
             ];

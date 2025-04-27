@@ -145,7 +145,8 @@
                         'avatar' => $row['avatar'],
                         'role' => $row['role']
                     ];
-                    http_response_code(201);
+                    //201 code is not working for some reason.
+                    //http_response_code(201);
                     //Head to landing page
                     header("location:".DOMAIN_NAME);
                 }

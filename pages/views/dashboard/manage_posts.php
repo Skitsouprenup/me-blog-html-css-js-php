@@ -63,36 +63,39 @@
 
                     <div class="dashboard_content">
                         <h2>Manage Posts</h2>
+
                         <div class="data_list_content">
-                            <div class="data_view_small_screen">
-                                <?php foreach($posts as $list):?>
-                                    <div class="data_container">
-                                        <div class="data">
-                                            <h3>Title</h3>
-                                            <p><?php echo $list['post_title']?></p>
-                                        </div>
-                                        <div class="data">
-                                            <h3>Category</h3>
-                                            <p><?php echo $list['category_title']?></p>
-                                        </div>
-                                        <div class="actions">
-                                            <h3>Actions</h3>
-                                            <div class="dashboard_actions_mobile">
-                                                <a 
-                                                    href=<?php echo $update_post_page.$list['title']?> 
-                                                    class="edit"
-                                                >
-                                                    <div>Edit</div>
-                                                </a>
-                                                <a href="#" class="delete">
-                                                    <div>Delete</div>
-                                                </a>
+                            <?php if(count($posts) > 0):?>
+                                <div class="data_view_small_screen">
+                                    <?php foreach($posts as $list):?>
+                                        <div class="data_container">
+                                            <div class="data">
+                                                <h3>Title</h3>
+                                                <p><?php echo $list['post_title']?></p>
+                                            </div>
+                                            <div class="data">
+                                                <h3>Category</h3>
+                                                <p><?php echo $list['category_title']?></p>
+                                            </div>
+                                            <div class="actions">
+                                                <h3>Actions</h3>
+                                                <div class="dashboard_actions_mobile">
+                                                    <a 
+                                                        href=<?php echo $update_post_page.$list['title']?> 
+                                                        class="edit"
+                                                    >
+                                                        <div>Edit</div>
+                                                    </a>
+                                                    <a href="#" class="delete">
+                                                        <div>Delete</div>
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                <?php endforeach?>
-                                
-                            </div>
+                                    <?php endforeach?>  
+                                </div>
+                            <?php endif?>
+                            
                             <table class="data_view_large_screen">
                                 <tr>
                                     <th>Title</th>
@@ -127,6 +130,9 @@
                                     </tr>
                                 <?php endforeach?>
                             </table>
+                            <?php if(count($posts) === 0):?>
+                                <div class="no_posts">No Posts Found</div>
+                            <?php endif?>
                         </div>
                     </div>
                 </div>
