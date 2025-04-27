@@ -23,6 +23,10 @@
     }
     
     function trim_text(string $text, int $threshold = 15, $trim_ln = 7) {
+        //Abort operation if trim length is greater than max character length
+        if($trim_ln > $threshold) return $text;
+        //Abort operation if threshold is less than 15 which is the default
+        //threshold
         if($threshold < 15) return $text;
         $ln = strlen($text);
 

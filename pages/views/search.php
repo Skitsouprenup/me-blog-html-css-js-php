@@ -1,5 +1,6 @@
 <?php
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/constants.php";
+    require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/scripts/read/get_posts.php";
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/page_access.php";
     pageAccessControl(__FILE__);
 
@@ -7,32 +8,12 @@
 
     $uncategorized_desc = "Posts that don't have a proper category";
 
-    $posts = [];
+    $posts = NULL;
     $category = [];
-    if(isset($_GET['id'])) {
-        $id = filter_var($_GET['id'], FILTER_SANITIZE_NUMBER_INT);
-        $get_cat_query = "SELECT title,description from categories WHERE id=$id";
-        $result = $connection->query($get_cat_query);
-
-        if($result->num_rows > 0) {
-            $category = $result->fetch_assoc();
-        }
-
-        $get_posts_query = 
-        "SELECT p.id as post_id,p.title,p.content,p.thumbnail,p.time_created,".
-        "usr.firstname,usr.lastname,usr.avatar FROM posts as p ".
-        "INNER JOIN users as usr ON p.author_id=usr.id ".
-        "WHERE p.category_id=$id";
-        $result = $connection->query($get_posts_query);
-
-        if($result->num_rows > 0) {
-            //This while loop removes the NULL value
-            //that is placed by fetch_assoc() as the last
-            //item.
-            while($row = $result->fetch_assoc()) {
-                $posts[] = $row;
-            }
-        }
+    $title = '';
+    if(isset($_GET['search'])) {
+        $title = filter_var($_GET['search'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $posts = get_posts_by_title($connection, $title);
     }
 ?>
 
@@ -42,15 +23,19 @@
 
     <body>
     <!-- navigation menu -->
-        <?php include ROOT_PATH.'pages'.$ds.'partials'.$ds.'nav.php'; ?>
+        <?php include ROOT_PATH.'pages'.$ds.'partials'.$ds.'nav.php' ?>
 
+        <!-- 
+            Classes used here are classes for categories because
+            the page layour for search is very similar to categories page.
+        -->
         <div class="category__content_container">
             <div class="category_header">
-                <p><?php echo $category['title'] ?? 'Uncategorized'?></p>
-                <p class="category_desc"><?php echo $category['description'] ?? $uncategorized_desc?></p>
+                <p><?php echo 'Search For \''.trim_text($title,20, 15).'\'' ?></p>
+                <p class="category_desc"><?php echo count($posts)." items found."?></p>
             </div>
 
-            <?php if(count($posts) > 0):?>
+            <?php if(isset($posts)):?>
                 <section class="category_list__container">
                 <!-- Blog List -->
                     <div class="blog_list">
@@ -64,14 +49,14 @@
                                 <div class="blog__info_content">
                                     <div class="blog__header">
                                         <a 
-                                            href=<?php echo DOMAIN_NAME."pages/views/single_post.php?id={$list['post_id']}"?>
+                                            href=<?php echo DOMAIN_NAME."pages/views/single_post.php?id={$list['id']}"?>
                                             class="blog__title"
                                         >
-                                            <?php echo $list['title']?>
+                                            <?php echo $list['post_title']?>
                                         </a>
                                         <div class="blog__categories">
                                             <div class="blog__categories_item_no_hover">
-                                                <p><?php echo $category['title'] ?? 'Uncategorized'?></p>
+                                                <p><?php echo $list['cat_title'] ?? 'Uncategorized'?></p>
                                             </div>
                                         </div>
                                     </div>

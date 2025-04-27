@@ -75,11 +75,18 @@ input[type="checkbox"]:checked::before {
 .file_upload {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     width: fit-content;
     row-gap: 0.25rem;
 }
 
-.file_upload > input[type="file"] {
+.file_input {
+    display: flex;
+    column-gap: 0.5rem;
+    align-items: center;
+}
+
+.file_upload > .file_input > .file_upload_box {
     background-color: darkslateblue;
     padding: 0.5rem;
     border-radius: 5px;
@@ -87,6 +94,17 @@ input[type="checkbox"]:checked::before {
 
 .file_upload > label {
     font-size: 1.5rem;
+}
+
+.file_upload > .file_input > button {
+    cursor: pointer;
+    background-color: transparent;
+    display: none;
+    height: fit-content;
+}
+
+.file_upload > .file_input > button:hover > svg {
+    fill: darksalmon;
 }
 
 select {
@@ -246,11 +264,15 @@ select {
 /* General */
 
 .featured_blog__container, .blog_list__container, .category_list__container, 
-.search_bar__container {
+.search_bar__container, .category_list__container_index {
     display: flex;
     flex-direction: column;
     row-gap: 0.5rem;
     width: 95%;
+}
+
+.category_list__container_index {
+    padding: 1rem 0;
 }
 
 .category__content_container {

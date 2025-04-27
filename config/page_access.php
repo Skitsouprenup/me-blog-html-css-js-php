@@ -22,6 +22,7 @@
                     str_replace('/',$this->ds,"/pages/forms/signup.php"),
                     str_replace('/',$this->ds,"/pages/views/category_list.php"),
                     str_replace('/',$this->ds,"/pages/views/single_post.php"),
+                    str_replace('/',$this->ds,"/pages/views/search.php"),
                     $this->ds."index.php",
                     str_replace('/',$this->ds,"/projects/blog-app"),
                 ],

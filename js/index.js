@@ -3,7 +3,19 @@ const navItemsMobile = document.querySelectorAll('.nav__options_credentials_opti
 const navHamBurgerOpen = document.querySelector('.nav__options_mobile > .choices > .menu')
 const navHamBurgerClose = document.querySelector('.nav__options_mobile > .choices > .close')
 
-console.log(navHamBurgerClose)
+const fileUploadClose = document.querySelector('.file_upload > .file_input > button')
+const toggleFileUploadClose = () => {
+    if(fileUploadClose.style.display === '')
+        fileUploadClose.style.display = 'flex'
+}
+
+function removeFileUpload() {
+    fileUploadClose.style.display = ''
+    fileUpload.value = ''
+}
+
+fileUpload = document.querySelector('.file_upload > .file_input > .file_upload_box')
+fileUpload.addEventListener('change', toggleFileUploadClose)
 
 const openNavItemsMobile = () => {
     navItemsContainer.style.display = 'flex'

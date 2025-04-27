@@ -133,7 +133,7 @@
         <hr class="category_list__hr" />
         <div class="content_container">
             <?php if(count($categories) > 0):?>
-            <div class="category_list__container">
+            <div class="category_list__container_index">
                 <div class="category_list">
                     <?php foreach($categories as $list):?>
                     <a href="<?php echo DOMAIN_NAME."pages/views/category_list.php?id={$list['id']}"?>">
@@ -142,6 +142,13 @@
                         </p>
                     </a>
                     <?php endforeach?>
+
+                    <!-- Uncategorized -->
+                    <a href="<?php echo DOMAIN_NAME."pages/views/category_list.php"?>">
+                        <p class="category_list__link">
+                            Uncategorized
+                        </p>
+                    </a>
                 </div>
             </div>
             <?php endif?>

@@ -1,5 +1,25 @@
 <?php
 
+    function get_posts_by_title($connection, $title) {
+        $posts = NULL;
+        
+        $get_posts = 
+            "SELECT p.id,p.title as post_title,p.content,p.thumbnail,".
+            "p.time_created,p.category_id,cat.title as cat_title,usr.firstname,".
+            "usr.lastname,usr.avatar FROM posts as p ".
+            "INNER JOIN categories as cat ON cat.id=p.category_id ".
+            "INNER JOIN users as usr ON usr.id=p.author_id WHERE p.title LIKE'%$title%'";
+
+        $result = $connection->query($get_posts);
+
+        if($result->num_rows > 0) {
+            while($row = $result->fetch_assoc())
+                $posts[] = $row;
+        }
+
+        return $posts;
+    }
+
     function get_posts($connection, $featured_post) {
         $posts = NULL;
         /*
