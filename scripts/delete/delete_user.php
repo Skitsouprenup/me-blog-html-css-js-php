@@ -25,7 +25,7 @@
             if($img_path) unlink($img_path);
 
             //Get user posts thumbnails...
-            $fetch_post_thumbs = "SELECT thumbnail FROM posts WHERE id={$row['id']}";
+            $fetch_post_thumbs = "SELECT thumbnail FROM posts WHERE author_id={$row['id']}";
             $thumbnails = $connection->query($fetch_post_thumbs);
 
             //Delete user data in database
@@ -42,7 +42,8 @@
                 // thumbnails that deleted posts left.
                 if($thumbnails->num_rows > 0) {
                     while($item = $thumbnails->fetch_assoc()) {
-                        $img_path = str_replace(DOMAIN_NAME,ROOT_PATH,$item);
+                        $img_path = str_replace(DOMAIN_NAME,ROOT_PATH,$item['thumbnail']);
+                        var_dump($img_path);
                         #replace URL's slash(/) with file path(DIRECTORY_SEPARATOR)
                         $img_path = str_replace('/',$ds,$img_path);
                         #Delete old post thumbnail
@@ -50,8 +51,17 @@
                     }
                 }
 
-                header('location:'.DOMAIN_NAME.'pages/views/dashboard/manage_users.php');
-                $_SESSION['dashboard_success_msg'] = "User $name has been deleted!";
+                //Delete directory
+                rmdir(ROOT_PATH."images/posts/{$row['id']}");
+
+                if($_SESSION['user_session']['id'] === $row['id']) {
+                    session_destroy();
+                    header('location:'.DOMAIN_NAME);
+                }
+                else {
+                    header('location:'.DOMAIN_NAME.'pages/views/dashboard/manage_users.php');
+                    $_SESSION['dashboard_success_msg'] = "User $name has been deleted!";
+                }
             }
 
         } else $abort_dashboard_op($abort_redirect,$connection);

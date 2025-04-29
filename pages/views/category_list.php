@@ -10,7 +10,7 @@
     $posts = [];
     $category = [];
     if(isset($_GET['id'])) {
-        $id = filter_var($_GET['id'], FILTER_SANITIZE_NUMBER_INT);
+        $id = (int)filter_var($_GET['id'], FILTER_SANITIZE_NUMBER_INT);
         $get_cat_query = "SELECT title,description from categories WHERE id=$id";
         $result = $connection->query($get_cat_query);
 
@@ -22,7 +22,8 @@
         "SELECT p.id as post_id,p.title,p.content,p.thumbnail,p.time_created,".
         "usr.firstname,usr.lastname,usr.avatar FROM posts as p ".
         "INNER JOIN users as usr ON p.author_id=usr.id ".
-        "WHERE p.category_id=$id";
+        "WHERE ".($id < 1 ? 'p.category_id IS NULL' : "p.category_id=$id");
+
         $result = $connection->query($get_posts_query);
 
         if($result->num_rows > 0) {

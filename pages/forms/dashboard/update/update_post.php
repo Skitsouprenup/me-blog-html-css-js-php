@@ -51,7 +51,7 @@
     "p.title as post_title, p.content,p.category_id as post_category_id, ".
     "fp.post_id as featured_post_id FROM (SELECT title,id FROM categories) as cat, ".
     "(SELECT title,content,category_id FROM posts WHERE id=$post_id) as p, ".
-    "(SELECT post_id from featured_post WHERE id=1) as fp";
+    "(SELECT post_id from featured_post WHERE id=1) as fp ORDER BY cat.title ASC";
     $result = $connection->query($fetch_data);
 
     if ($result->num_rows === 0) {
@@ -64,12 +64,18 @@
             $post_info['title'] = $row['post_title'];
             $post_info['description'] = $row['content'];
         } 
+        // This won't trigger if $row['post_category_id'] is null which can happen
+        // if a post is uncategorized.
         if(!isset($post_info['category']) && $row['post_category_id'] === $row['category_id']) {
             $post_info['category'] = $row['category_title'];
         }
         if($featured_post_id === -1) $featured_post_id = $row['featured_post_id'];
 
     }
+
+    //Sometimes, $post_info['category'] is unset because $row['post_category_id']
+    //can be null if a post is 'uncategorized'.
+    $cat_key_exists = array_key_exists('category',$post_info);
 
     $index = 0;
     # [0] = index, [1] = name-length
@@ -119,7 +125,9 @@
                             <?php foreach($categories as $category):?>
                                 <option 
                                     value="<?php echo $category?>"
-                                    <?php echo $category === $post_info['category'] ? 'selected' : ''?>
+                                    <?php if($cat_key_exists):?>
+                                        <?php echo $category === $post_info['category'] ? 'selected' : ''?>
+                                    <?php endif?>
                                 >
                                     <?php echo $category?>
                                 </option>

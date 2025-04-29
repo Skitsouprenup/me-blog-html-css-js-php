@@ -13,11 +13,13 @@
     $update_post_page = DOMAIN_NAME.'pages/forms/dashboard/update/update_post.php?id=';
     $delete_post_script = DOMAIN_NAME."scripts/delete/delete_post.php?id=";
 
+    // LEFT JOIN includes rows from posts that don't match
+    // the "ON" condition
     $fetch_user_posts = 
     "SELECT posts.title as post_title, posts.id as post_id, ".
     "categories.title as category_title FROM posts ".
-    "INNER JOIN categories ON posts.category_id = categories.id ".
-    "WHERE posts.author_id={$_SESSION['user_session']['id']} ".
+    "LEFT JOIN categories ON posts.category_id=categories.id ".
+    "WHERE posts.author_id={$_SESSION['user_session']['id']} OR category_id IS NULL ".
     "ORDER BY posts.id DESC";
     $result = $connection->query($fetch_user_posts);
 
@@ -32,6 +34,7 @@
         $end = end($posts);
         if(!isset($end)) array_pop($posts);
     }
+
     $connection->close();
 
     $operation = 'post';
@@ -75,13 +78,13 @@
                                             </div>
                                             <div class="data">
                                                 <h3>Category</h3>
-                                                <p><?php echo $list['category_title']?></p>
+                                                <p><?php echo $list['category_title'] ?? 'Uncategorized'?></p>
                                             </div>
                                             <div class="actions">
                                                 <h3>Actions</h3>
                                                 <div class="dashboard_actions_mobile">
                                                     <a 
-                                                        href=<?php echo $update_post_page.$list['title']?> 
+                                                        href=<?php echo $update_post_page.$list['post_id']?> 
                                                         class="edit"
                                                     >
                                                         <div>Edit</div>
@@ -105,7 +108,7 @@
                                 <?php foreach($posts as $list):?>
                                     <tr>
                                         <td><?php echo $list['post_title']?></td>
-                                        <td><?php echo $list['category_title']?></td>
+                                        <td><?php echo $list['category_title'] ?? 'Uncategorized'?></td>
                                         <td>
                                             <div class="dashboard_actions">
                                                 <a 

@@ -3,13 +3,22 @@
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/db_constants.php";
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/scripts/read/get_posts.php";
 
+    require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/scripts/utils/pagination_utils.php";
+
     require $_SERVER["DOCUMENT_ROOT"]."/projects/blog-app/config/page_access.php";
     pageAccessControl(__FILE__);
 
-    $featured_post = get_featured_post($connection);
-    $posts = get_posts($connection, $featured_post);
+    $current_page = 1;
+    if(isset($_GET['cp'])) {
+        $val = filter_var($_GET['cp'], FILTER_SANITIZE_NUMBER_INT);
+        $current_page = $val;
+    }
+    $page_offset = $item_per_page*($current_page-1);
 
-    $fetch_categories = "SELECT id,title from categories";
+    $featured_post = get_featured_post($connection);
+    $posts = get_posts($connection, $featured_post, $item_per_page, $page_offset);
+
+    $fetch_categories = "SELECT id,title FROM categories ORDER BY title ASC";
     $result = $connection->query($fetch_categories);
     $categories = [];
 
@@ -18,13 +27,21 @@
             $categories[] = $row;
     }
 
+    $fp_id = isset($featured_post) ? $featured_post['id'] : NULL;
+    $page_item_count = get_posts_count($connection, $fp_id);
+    $page_count = (int)($page_item_count/$item_per_page);
+
+    resolve_page_count($page_count, $page_item_count);
+
     $connection->close();
 ?>
 
 <!DOCTYPE html>
 <html>
     
-    <?php include ROOT_PATH.'pages'.$ds.'partials'.$ds.'head.php' ?>
+    <head>
+        <?php include ROOT_PATH.'pages'.$ds.'partials'.$ds.'head_content_only.php' ?>
+    </head>
 
     <body>
 
@@ -79,7 +96,7 @@
             </section>
 
          <!-- Blog List -->
-            <section class="blog_list__container">
+            <section class="blog_list__container" id="blogposts">
                 <h1>Blogs</h1>
                     <div class="blog_list">
 
@@ -129,6 +146,9 @@
             </section>
 
             <!-- Pagination -->
+            <?php if(isset($posts)):?>
+                <?php include '.'.$ds.'pages'.$ds.'partials'.$ds.'pagination.php'; ?>
+            <?php endif?>
         </div>
 
 <!-- Category List -->
@@ -146,7 +166,7 @@
                     <?php endforeach?>
 
                     <!-- Uncategorized -->
-                    <a href="<?php echo DOMAIN_NAME."pages/views/category_list.php"?>">
+                    <a href="<?php echo DOMAIN_NAME."pages/views/category_list.php?id=-1"?>">
                         <p class="category_list__link">
                             Uncategorized
                         </p>
@@ -163,6 +183,10 @@
 
     <!-- Footer  -->
     <?php include ROOT_PATH.'pages'.$ds.'partials'.$ds.'footer.php'; ?>
-
     </body>
+    
+    <script src=<?php echo DOMAIN_NAME."js/pagination.js"; ?>></script>
+    <script>
+        togglePagBtnHighlights(<?php echo $current_page?>, <?php echo $page_count?>)
+    </script>
 </html>

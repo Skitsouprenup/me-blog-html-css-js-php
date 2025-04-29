@@ -44,7 +44,6 @@
         //featured_post table must only have one record and the id of that
         //is '1'.
         $update_featured_post = "UPDATE featured_post SET ".
-        "post_title=NULL, ".
         "post_id=NULL WHERE id=1";
         $connection->query($update_featured_post);
 

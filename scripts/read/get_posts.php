@@ -20,7 +20,9 @@
         return $posts;
     }
 
-    function get_posts($connection, $featured_post) {
+    function get_posts($connection, $featured_post, $limit=0, $offset=0) {
+        /* Get total number of posts */
+
         $posts = NULL;
         /*
             This is how inner join works. Inner join combines two table
@@ -61,6 +63,11 @@
         if(isset($featured_post['id'])) {
             $get_posts .= " WHERE p.id != {$featured_post['id']}";
         }
+
+        if($limit > 0) $get_posts .= " LIMIT $limit";
+        // OFFSET is exclusive. For example, if OFFSET is 5, then
+        // mysql will start to fetch from row 6 onward or until LIMIT is reached.
+        if($offset > 0) $get_posts .= " OFFSET $offset";
 
         $result = $connection->query($get_posts);
 
