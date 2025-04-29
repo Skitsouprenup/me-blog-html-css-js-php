@@ -1,4 +1,4 @@
-# mycafestore-angular-springboot
+# Me Blog: Blog Manager For Bloggers
 A Simple and responsive Blog Management App created using HTML5, CSS3, Javascript and PHP. This project doesn't use any frameworks.
 
 Click this [link](https://youtu.be/SU_k3zqWv80) to view the quick demo of this project.
