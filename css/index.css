@@ -34,7 +34,7 @@ body {
     overflow: auto;
 }
 
-textarea, input[type="text"] {
+textarea, input[type="text"], input[type="password"] {
     font-family: sanf-serif;
 }
 
