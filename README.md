@@ -1,5 +1,5 @@
 # Me Blog: Blog Manager For Bloggers
-A Simple and responsive Blog Management App created using HTML5, CSS3, Javascript and PHP. This project doesn't use any frameworks.
+A Simple and responsive Blog Management App created using HTML5, CSS3, Javascript, MySQL and PHP. This project doesn't use any frameworks.
 
 Click this [link](https://youtu.be/SU_k3zqWv80) to view the quick demo of this project.
 
@@ -20,6 +20,7 @@ Click this [link](https://youtu.be/SU_k3zqWv80) to view the quick demo of this p
 * **HTML5**
 * **CSS3**
 * **Javascript**
+* **MySQL**
 * **PHP**
 * **XAMPP**
 
